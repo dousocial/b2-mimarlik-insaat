@@ -30,12 +30,6 @@ const GET_USER_INFO_WITH_JWT_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserI
 
 class OAuthService {
   constructor(private client: ReturnType<typeof axios.create>) {
-    console.log("[OAuth] Initialized with baseURL:", ENV.oAuthServerUrl);
-    if (!ENV.oAuthServerUrl) {
-      console.error(
-        "[OAuth] ERROR: OAUTH_SERVER_URL is not configured! Set OAUTH_SERVER_URL environment variable."
-      );
-    }
   }
 
   private decodeState(state: string): string {
@@ -91,6 +85,12 @@ class SDKServer {
     this.oauthService = new OAuthService(this.client);
   }
 
+  private ensureOAuthConfigured() {
+    if (!ENV.oauthEnabled) {
+      throw new Error("OAuth is not configured.");
+    }
+  }
+
   private deriveLoginMethod(
     platforms: unknown,
     fallback: string | null | undefined
@@ -122,6 +122,7 @@ class SDKServer {
     code: string,
     state: string
   ): Promise<ExchangeTokenResponse> {
+    this.ensureOAuthConfigured();
     return this.oauthService.getTokenByCode(code, state);
   }
 
@@ -131,6 +132,7 @@ class SDKServer {
    * const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
    */
   async getUserInfo(accessToken: string): Promise<GetUserInfoResponse> {
+    this.ensureOAuthConfigured();
     const data = await this.oauthService.getUserInfoByToken({
       accessToken,
     } as ExchangeTokenResponse);
@@ -235,6 +237,7 @@ class SDKServer {
   async getUserInfoWithJwt(
     jwtToken: string
   ): Promise<GetUserInfoWithJwtResponse> {
+    this.ensureOAuthConfigured();
     const payload: GetUserInfoWithJwtRequest = {
       jwtToken,
       projectId: ENV.appId,
