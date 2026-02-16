@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2, Users, Building2, Palette, Hammer, Lightbulb, Mail, Phone, MapPin, Star, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
-import { TRPCClientError } from "@trpc/client";
-import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -277,6 +275,7 @@ const CONTENT = {
       unconfigured: "Email service is not configured.",
       sendFailed: "We could not send your request right now. Please try again.",
       messageMin: "Please enter at least 10 characters for your message.",
+      mailOpened: "Your email app has been opened.",
     },
   },
   tr: {
@@ -542,6 +541,7 @@ const CONTENT = {
       unconfigured: "E-posta servisi yapılandırılmamış.",
       sendFailed: "Talebiniz şu anda gönderilemedi. Lütfen tekrar deneyin.",
       messageMin: "Mesajınız en az 10 karakter olmalıdır.",
+      mailOpened: "E-posta uygulamanız açıldı.",
     },
   },
 } as const;
@@ -549,7 +549,6 @@ const CONTENT = {
 export default function Home() {
   // Auth is currently unused on the marketing page.
   const { theme, toggleTheme } = useTheme();
-  const contactMutation = trpc.contact.send.useMutation();
   const [lang, setLang] = useState<Lang>(() => {
     if (typeof window === "undefined") return "tr";
     const stored = localStorage.getItem("lang");
@@ -559,6 +558,7 @@ export default function Home() {
   const t = CONTENT[lang];
   const [activeService, setActiveService] = useState(0);
   const [activeProcess, setActiveProcess] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -608,44 +608,31 @@ export default function Home() {
     }
 
     try {
-      const result = await contactMutation.mutateAsync({
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim() || undefined,
-        projectType: formData.projectType || undefined,
-        message: formData.message.trim(),
-      });
-
-      if (!result.success) {
-        if ("code" in result) {
-          if (result.code === "MAILER_NOT_CONFIGURED") {
-            toast.error(t.toast.unconfigured);
-          } else if (result.code === "MAILER_SEND_FAILED") {
-            toast.error(t.toast.sendFailed);
-          } else {
-            toast.error(t.toast.error);
-          }
-        } else {
-          toast.error(t.toast.error);
-        }
-        return;
-      }
-
-      toast.success(t.toast.success);
+      setIsSubmitting(true);
+      const projectLabel =
+        t.contactSection.form.projectTypeOptions.find(
+          (option) => option.value === formData.projectType
+        )?.label || formData.projectType || "-";
+      const subject = `${t.brand} - ${t.contactSection.form.submit}`;
+      const bodyLines = [
+        `Name: ${formData.name.trim()}`,
+        `Email: ${formData.email.trim()}`,
+        `Phone: ${formData.phone.trim() || "-"}`,
+        `Project Type: ${projectLabel}`,
+        "",
+        "Message:",
+        formData.message.trim(),
+      ];
+      const mailto = `mailto:info@bkare-mimarlik.com?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+      window.location.href = mailto;
+      toast.success(t.toast.mailOpened);
       setFormData({ name: "", email: "", phone: "", projectType: "", message: "" });
     } catch (error) {
-      if (error instanceof TRPCClientError) {
-        const zodError = error.data?.zodError;
-        if (zodError?.fieldErrors?.message) {
-          toast.error(t.toast.messageMin);
-          return;
-        }
-        if (error.data?.code === "BAD_REQUEST") {
-          toast.error(t.toast.required);
-          return;
-        }
-      }
       toast.error(t.toast.error);
+    } finally {
+      setTimeout(() => setIsSubmitting(false), 300);
     }
   };
 
@@ -1084,10 +1071,10 @@ export default function Home() {
               <Button
                 className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
                 type="submit"
-                disabled={contactMutation.isPending}
-                aria-busy={contactMutation.isPending}
+                disabled={isSubmitting}
+                aria-busy={isSubmitting}
               >
-                {contactMutation.isPending ? t.contactSection.form.sending : t.contactSection.form.submit}
+                {isSubmitting ? t.contactSection.form.sending : t.contactSection.form.submit}
               </Button>
             </form>
           </div>
