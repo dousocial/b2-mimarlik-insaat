@@ -218,7 +218,7 @@ export default function Home() {
             </div>
             <div className="relative h-96 lg:h-full animate-in fade-in slide-in-from-right-4 duration-700 delay-200">
               <img
-                src="https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/i2WddQ6dy1MHiAL9rQlBl8-img-1_1771263280000_na1fn_aGVyby1tb2Rlcm4tb2ZmaWNl.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L2kyV2RkUTZkeTFNSGlBTDlyUWxCbDgtaW1nLTFfMTc3MTI2MzI4MDAwMF9uYTFmbl9hR1Z5YnkxdGIyUmxjbTR0YjJabWFXTmwucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=X7Vb5QOy3iWvp6YW9kQW64of65ZCGRerER4Y4ItNlkQaonwwaywKxlfMlNDsjjPRMn30CGEE~zuCAHD-TVtxq-DnYnLtU~BLV1GxYxGNZlqYMb~05CuPAPA-wGFxPRukbd-5uJMr8xJ7YNiXZC5YAokWI~kbgeFfdO7u5qcvfd9Zbu1q0qVTJ96ELdYack6lP33QNJMCzVG3dQqntZHzznmu8-~Q91qbinl2AtIfbm8i5E7o4iHlXEg4eM9Dxg3VJ7fj5yokKYqRtptPkM4b2vlFa37GCMZbFFKoJv2q00B~nxM44EfPOk2kZwiapcPFumByn~oHr3XKlCN~z3RqIQ__"
+                src="https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/Yoqdi08PzPUgK4IIshzkIy-img-1_1771264634000_na1fn_bW9kZXJuLW9mZmljZS1pbnRlcmlvcg.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L1lvcWRpMDhQelBVZ0s0SUlzaHprSXktaW1nLTFfMTc3MTI2NDYzNDAwMF9uYTFmbl9iVzlrWlhKdUxXOW1abWxqWlMxcGJuUmxjbWx2Y2cuanBnP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=IDRxcrRn9PohRTkAV7jkLRJkw15BKOkf4CF4hb13snRMJ8v~nUTx-cJtIPl-QFetErfLno0YtDg2xli3bzn~-Kjc6gc4HAaKZtwB6Lq~tgvrfLNeEqN9I0XpxJy-tRke4clNC~Oxnqpyc2RjQmZ1Dbtnrcx~ytH61v9KbnSERDPnnl3aMW3ytvJmL1zmDYSFqedqbDIIvFSkcUUhPGOhbrjy3KdznWY~UcABnFKUx03ZqI9cF~BPtsHtcwuLTtFWovgQ6ppcibfMHKuue5sChvuCJgsQZCs-x0D7y3lbq-I9D2ucNo8Ckf0CC61D8637uyKz-U1GDGG1ldF-Cgq5zQ__"
                 alt="Modern Office"
                 className="w-full h-full object-cover rounded-lg shadow-2xl"
               />
@@ -262,7 +262,7 @@ export default function Home() {
             </div>
             <div className="order-1 lg:order-2">
               <img
-                src="https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/i2WddQ6dy1MHiAL9rQlBl8-img-2_1771263280000_na1fn_bW9kZXJuLWFyY2hpdGVjdHVyZS1leHRlcmlvcg.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L2kyV2RkUTZkeTFNSGlBTDlyUWxCbDgtaW1nLTJfMTc3MTI2MzI4MDAwMF9uYTFmbl9iVzlrWlhKdUxXRnlZMmhwZEdWamRIVnlaUzFsZUhSbGNtbHZjZy5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=PhRIxML~CY5XWecep2BBVqKxvrOBGl4X20sAncGOPtuXigzgHB8zR48n4igl-~Qxw6P~ifShz~gBOKkEmSzlCr860DvddFmdUAqprYsiyK3kK1ONDEAVBaVhc85XenMrUNnmy84Hmjid9JarppmWKmEi~96mlrXsTt9wT94YderQ6EGVYStmmysZAoesOz8mwQ7sHZbShJ94Kwz2gwGMz8FOlV2oVKDqNEbvzNbloVnY0Hm5s9hRwrael8B8GGtyneIhI5U35piJfPqa3bEA5W07jNHOZGs44rL45bRUykT~KB5-Uo~bsE-qSmbtGDOyPci18MIEIpI7wVqQ8i884g__"
+                src="https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/Yoqdi08PzPUgK4IIshzkIy-img-2_1771264636000_na1fn_bHV4dXJ5LXJlc2lkZW50aWFsLWJ1aWxkaW5n.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L1lvcWRpMDhQelBVZ0s0SUlzaHprSXktaW1nLTJfMTc3MTI2NDYzNjAwMF9uYTFmbl9iSHY0ZFhKNUxYSmxjMmxrWlc1MGFXRnNMV0oxYVd4a2FXNW4uanBnP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=goaJWpg3XbOU3gujGVJoCMjI18JT83AUJI3N17SnqEv4S4e5ASuSUPdfmZ7bJOvqEvHe7asmDtxCHGNb60FXmPnqmOWbL0DtqYbmTRiB6IXqOpvnUuv3VzOYjrDZXwELXz9zpCKcYSEIQPr3y6DsEGEnRuYsDA8dzVyf78~ZE2eNc7S7KIKJ5RZ2GwiCOpG4bwgOPuqj74rxmUfERiC2sXFhJyB1qoQjB5rS0AB7-jKP2kZyI4qPXzsvN3hl9T-kSJ7QAAQgZM8WjqGE5bSzPx3RCK3wtKQrR6So1eztdgNps4bgQ7a8X6y1eoUCj06EuExs9vAAjhHjgo9lRufrAQ__"
                 alt="Modern Architecture"
                 className="w-full h-96 object-cover rounded-lg shadow-xl"
               />
@@ -315,11 +315,16 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, idx) => (
+            {projects.map((project, idx) => {
+              const projectImages = [
+                "https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/Yoqdi08PzPUgK4IIshzkIy-img-4_1771264634000_na1fn_Y29tbWVyY2lhbC1vZmZpY2Utc3BhY2U.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L1lvcWRpMDhQelBVZ0s0SUlzaHprSXktaW1nLTRfMTc3MTI2NDYzNDAwMF9uYTFmbl9ZMjl0YldWeVkybGhiQzF2Wm1acFkyVXRjM0JoWTJVLmpwZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=Op0hfp9KgiXZcjA2JuMNpVxaLoJokZBtqGcSbCjA~QLErn~~VK~CzspMP-e4CLmOGXUdYcv8o~ew77lbvL4a4h1PMf81XGn87arSfsqPPvcYMWoW6R5ipyBOx0ikJTrlkT-U2fH0sgPVCmLijSJyD976Xt~ZAKMgfS7bldWOA67GXDnVnf3tgyZ~YMOKVLtAJBnMxlX-iDkjOJzKoFuwvV--NCNr4BcPw77ifAxxiRDiLMLwQhhqYtMeB-qaf~ABLYB0EDD6pqdXcS25GhirIj-FZIT5uWJ700TMMBps~INGgMoLIpt~gGaf-JsjPvvNIfPY4Cf6n-lFxbYGCtN~IQ__",
+                "https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/Yoqdi08PzPUgK4IIshzkIy-img-3_1771264635000_na1fn_aW50ZXJpb3ItZGVzaWduLWxpdmluZy1zcGFjZQ.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L1lvcWRpMDhQelBVZ0s0SUlzaHprSXktaW1nLTNfMTc3MTI2NDYzNTAwMF9uYTFmbl9hVzUwWlhKcGIzSXRaR1Z6YVdkdUxXeHBkbWx1WnkxemNHRmpaUS5qcGc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=hwUMehDcYeTZFea07SjJNSMpy03vI0--ALPjxmnc4pDzSMnj6wXjxneCSNA8ng3YAWfxbc0Yo3aTJcTakIpuRGlL8R-M7FVS9wcjm68-RIYHhF~uU0ezkOzFMtiiV47JiyrBaneMOQa1ZZoCXsLrCrWeO-mPZl6KOAR4gQCqZ5Pfi2EZPjjmDvQLrS7UaxTrQQ8-PRNnBwuJfDpAYTbCGvamIeP73MPuIlEYIXt7lU5ehbG2PNpFpn2gWn413dHDb602WcFIq28I6seJGrC6Tklt~TYKapFr0Lf3cWzLgf04kWWy1VeiJakKAnXgESUpRMmnYM0SUQZpo3daINtWJA__"
+              ];
+              return (
               <div key={idx} className="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all">
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={project.image}
+                    src={projectImages[idx] || project.image}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -340,7 +345,8 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         </div>
       </section>
