@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /.env
+Disallow: /__manus__/
 
-Sitemap: /sitemap.xml
+Sitemap: https://b2mimarlik.manus.space/sitemap.xml

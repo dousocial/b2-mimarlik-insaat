@@ -2,38 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://b2mimarlik.manus.space/</loc>
-    <lastmod>2025-02-16</lastmod>
+    <lastmod>2026-02-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://b2mimarlik.manus.space/#hakkimizda</loc>
-    <lastmod>2025-02-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://b2mimarlik.manus.space/#projeler</loc>
-    <lastmod>2025-02-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://b2mimarlik.manus.space/#hizmetler</loc>
-    <lastmod>2025-02-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://b2mimarlik.manus.space/#blog</loc>
-    <lastmod>2025-02-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://b2mimarlik.manus.space/#iletisim</loc>
-    <lastmod>2025-02-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
 </urlset>

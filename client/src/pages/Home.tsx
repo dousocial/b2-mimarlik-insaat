@@ -1,22 +1,562 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, Users, Building2, Palette, Hammer, Lightbulb, Mail, Phone, MapPin, Star } from "lucide-react";
-import { useState } from "react";
+import { ArrowRight, CheckCircle2, Users, Building2, Palette, Hammer, Lightbulb, Mail, Phone, MapPin, Star, Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
+import { TRPCClientError } from "@trpc/client";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { useLocation } from "wouter";
+import { useTheme } from "@/contexts/ThemeContext";
 
 /**
- * b² Mimarlık & İnşaat - Satış Hunisi Websitesi
- * Tasarım Felsefesi: Minimalist Raffinement
- * - Asimetrik layout, diagonal dividers, bakır aksent çizgiler
- * - Playfair Display başlıklar (zarafet), Inter body (okunabilirlik)
- * - Bol whitespace, profesyonel ve güven odaklı
+ * B² Architecture & Construction - Sales Funnel Website
+ * Design Philosophy: Minimalist Refinement
+ * - Asymmetric layout, diagonal dividers, copper accent lines
+ * - Playfair Display for headings (elegance), Inter for body (readability)
+ * - Generous whitespace, professional and trust-focused
  */
 
+type Lang = "tr" | "en";
+
+const CONTENT = {
+  en: {
+    meta: {
+      title:
+        "B² Architecture & Construction | Two Lines, One Signature - Architecture & Construction in Denizli",
+      description:
+        "B² Architecture & Construction is a professional design-and-build studio in Denizli offering architectural design, interior architecture, and turnkey construction services.",
+      keywords:
+        "architecture, interior architecture, construction, design, Denizli, turnkey, fit-out",
+      ogTitle: "B² Architecture & Construction | Two Lines, One Signature",
+      ogDescription:
+        "Professional design-and-build services that bring architecture and construction together under one roof.",
+      ogLocale: "en_US",
+      twitterTitle: "B² Architecture & Construction",
+      twitterDescription:
+        "Architecture, interior architecture, and turnkey construction services in Denizli",
+    },
+    brandShort: "B²",
+    brandNav: "B² Architecture",
+    brand: "B² Architecture & Construction",
+    tagline: "Two Lines, One Signature",
+    nav: {
+      about: "About",
+      projects: "Projects",
+      services: "Services",
+      blog: "Blog",
+      contact: "Contact",
+      cta: "Get in Touch",
+      themeAria: "Toggle theme",
+      langAria: "Switch language",
+    },
+    hero: {
+      eyebrow: "Two Lines, One Signature",
+      title: "Where Architecture Meets Engineering",
+      description:
+        "B² Architecture & Construction brings design and delivery under one roof, producing cohesive and buildable solutions.",
+      primaryCta: "Start a Project",
+      secondaryCta: "Learn More",
+    },
+    about: {
+      title: "About Us",
+      p1: "B² Architecture & Construction is a design-and-build studio born from the collaboration of two disciplines. By combining architectural design with engineering and site experience, we aim to deliver balanced, buildable, and distinctive spaces in every project.",
+      p2: "The founders’ complementary expertise allows us to provide strong, integrated solutions across both design and execution.",
+      bullets: [
+        "End-to-end delivery from design to turnkey construction",
+        "A holistic approach balancing architecture and engineering",
+        "A professional team focused on clear, reliable outcomes",
+      ],
+    },
+    servicesSection: {
+      eyebrow: "Our Services",
+      title: "Integrated Solutions",
+      description:
+        "From architectural design to turnkey construction, we deliver professional service at every stage.",
+    },
+    services: [
+      {
+        icon: Palette,
+        title: "Architectural Design",
+        description:
+          "From concept to full project documentation, we translate your vision into buildable spaces.",
+      },
+      {
+        icon: Building2,
+        title: "Interior Architecture",
+        description:
+          "Interior solutions that merge function and aesthetics for everyday use.",
+      },
+      {
+        icon: Hammer,
+        title: "Turnkey Construction",
+        description:
+          "From foundation to finish, we manage the whole process and deliver guaranteed results.",
+      },
+      {
+        icon: Lightbulb,
+        title: "3D Visualization",
+        description: "See your project in high-detail 3D before it is built.",
+      },
+    ],
+    projectsSection: {
+      eyebrow: "Completed Projects",
+      title: "Portfolio",
+      description:
+        "A selection of projects and client stories we have delivered successfully",
+      labels: {
+        location: "Location",
+        year: "Year",
+        area: "Area",
+        services: "Services",
+      },
+    },
+    projects: [
+      {
+        title: "Modern Office Fit-Out",
+        location: "Istanbul",
+        year: 2024,
+        area: "2500 m²",
+        services: "Design, Interior Architecture, Build",
+        image: "/images/project-1.jpg",
+      },
+      {
+        title: "Residential Complex",
+        location: "Denizli",
+        year: 2023,
+        area: "15000 m²",
+        services: "Architectural Design, Turnkey Construction",
+        image: "/images/project-2.jpg",
+      },
+    ],
+    processSection: {
+      eyebrow: "Process",
+      title: "Step-by-Step Roadmap",
+      description: "A systematic path we follow from start to finish",
+    },
+    processSteps: [
+      {
+        number: "01",
+        title: "Needs Analysis",
+        summary: "We define the project requirements in depth.",
+        description:
+          "We align on program, user profile, budget, and timeline. We survey the existing space, compile the needs program, quantities, and scope, and document them. These outputs become the shared reference for design decisions and the build plan.",
+      },
+      {
+        number: "02",
+        title: "Concept Design",
+        summary: "We develop creative, buildable concepts.",
+        description: "We develop creative, buildable concepts.",
+      },
+      {
+        number: "03",
+        title: "Project Documentation",
+        summary: "We prepare detailed drawings and implementation plans.",
+        description: "We prepare detailed drawings and implementation plans.",
+      },
+      {
+        number: "04",
+        title: "Execution",
+        summary: "We deliver with site management and quality control.",
+        description: "We deliver with site management and quality control.",
+      },
+      {
+        number: "05",
+        title: "Handover & Aftercare",
+        summary: "We complete the handover and provide long-term support.",
+        description: "We complete the handover and provide long-term support.",
+      },
+    ],
+    testimonialsSection: {
+      eyebrow: "Client Testimonials",
+      title: "Success Stories",
+    },
+    testimonials: [
+      {
+        name: "Ahmet Yılmaz",
+        company: "Technology Company",
+        text: "The B² team delivered every detail we imagined for our office design. Professionalism and creativity were perfectly balanced.",
+        rating: 5,
+      },
+      {
+        name: "Zeynep Kaya",
+        company: "Retail Brand",
+        text: "Thanks to their turnkey service, project management was simple. We received reliable, clear results from start to finish.",
+        rating: 5,
+      },
+      {
+        name: "Mehmet Demir",
+        company: "Construction Company",
+        text: "Their balanced approach between architecture and engineering significantly improved the quality of our projects.",
+        rating: 5,
+      },
+    ],
+    blogSection: {
+      eyebrow: "Insights & Journal",
+      title: "Latest Articles",
+      description:
+        "Up-to-date insights on architecture, design, and construction",
+      readMore: "Read More →",
+    },
+    blogPosts: [
+      {
+        title: "2025 Architecture Trends",
+        excerpt:
+          "Sustainable design, smart buildings, and the rising importance of biophilia...",
+        date: "Feb 16, 2025",
+      },
+      {
+        title: "Success Factors in Fit-Out Projects",
+        excerpt:
+          "Scheduling, budget, and communication: the pillars of successful fit-outs...",
+        date: "Feb 10, 2025",
+      },
+      {
+        title: "Advantages of Turnkey Construction",
+        excerpt: "One accountable partner, clear outcomes, and guaranteed quality...",
+        date: "Feb 5, 2025",
+      },
+    ],
+    teamSection: {
+      eyebrow: "Founding Partners",
+      title: "Experience & Expertise",
+    },
+    founders: [
+      {
+        name: "Burcu ÇETİN",
+        role: "Architect / Interior Designer",
+        bio: "Graduate of Ozyegin University, Faculty of Architecture. With four years of experience in Istanbul, she has taken active roles in corporate projects for Trendyol, Turkish Airlines, and others.",
+      },
+      {
+        name: "Ahmet Buğra KORALAY",
+        role: "Contractor / Project Manager",
+        bio: "Graduate of Celal Bayar University, Faculty of Engineering. With experience in the steel industry, he leads on-site management and client relations.",
+      },
+    ],
+    contactSection: {
+      title: "Contact Us",
+      description:
+        "Reach out to discuss your project. We will get back to you shortly.",
+      addressLabel: "Address",
+      phoneLabel: "Phone",
+      emailLabel: "Email",
+      address: "Denizli, Turkey",
+      form: {
+        nameLabel: "Full Name *",
+        emailLabel: "Email *",
+        phoneLabel: "Phone",
+        projectTypeLabel: "Project Type",
+        messageLabel: "Message *",
+        namePlaceholder: "Enter your name",
+        emailPlaceholder: "Your email address",
+        phonePlaceholder: "Your phone number",
+        projectTypePlaceholder: "Select...",
+        projectTypeOptions: [
+          { value: "architecture", label: "Architectural Design" },
+          { value: "interior", label: "Interior Architecture" },
+          { value: "construction", label: "Turnkey Construction" },
+          { value: "other", label: "Other" },
+        ],
+        messagePlaceholder: "Tell us about your project...",
+        submit: "Send Proposal",
+        sending: "Sending...",
+      },
+    },
+    footer: {
+      quickLinks: "Quick Links",
+      contact: "Contact",
+      rights: "All rights reserved.",
+      links: {
+        about: "About",
+        projects: "Projects",
+        blog: "Blog",
+      },
+    },
+    toast: {
+      required: "Please fill in all required fields",
+      success:
+        "Your proposal request has been sent. We will get back to you shortly.",
+      error: "There was an error sending your request",
+      unconfigured: "Email service is not configured.",
+      sendFailed: "We could not send your request right now. Please try again.",
+      messageMin: "Please enter at least 10 characters for your message.",
+    },
+  },
+  tr: {
+    meta: {
+      title:
+        "B² Mimarlık & İnşaat | İki Çizgi, Tek İmza - Denizli Mimarlık & İnşaat",
+      description:
+        "B² Mimarlık & İnşaat, Denizli'de mimari tasarım, iç mimari ve anahtar teslim inşaat hizmetleri sunan profesyonel bir tasarım ve yapım ofisidir.",
+      keywords:
+        "mimarlık, iç mimari, inşaat, tasarım, Denizli, anahtar teslim, fit-out",
+      ogTitle: "B² Mimarlık & İnşaat | İki Çizgi, Tek İmza",
+      ogDescription:
+        "Tasarım ve uygulamayı tek çatı altında buluşturan profesyonel mimarlık ve inşaat hizmetleri.",
+      ogLocale: "tr_TR",
+      twitterTitle: "B² Mimarlık & İnşaat",
+      twitterDescription:
+        "Denizli'de mimarlık, iç mimari ve anahtar teslim inşaat hizmetleri",
+    },
+    brandShort: "B²",
+    brandNav: "B² Mimarlık",
+    brand: "B² Mimarlık & İnşaat",
+    tagline: "İki Çizgi, Tek İmza",
+    nav: {
+      about: "Hakkımızda",
+      projects: "Projeler",
+      services: "Hizmetler",
+      blog: "Blog",
+      contact: "İletişim",
+      cta: "İletişime Geç",
+      themeAria: "Tema değiştir",
+      langAria: "Dil değiştir",
+    },
+    hero: {
+      eyebrow: "İki Çizgi, Tek İmza",
+      title: "Mimarlık ve Mühendisliğin Kesişimi",
+      description:
+        "B² Mimarlık & İnşaat, tasarım ve uygulamayı tek çatı altında buluşturarak, bütüncül ve uygulanabilir çözümler üretir.",
+      primaryCta: "Proje Başlat",
+      secondaryCta: "Daha Fazla Bilgi",
+    },
+    about: {
+      title: "Hakkımızda",
+      p1: "B² Mimarlık & İnşaat, iki farklı disiplinin ortak aklından doğan bir tasarım ve yapım ofisidir. Mimari tasarım ile mühendislik ve saha deneyimini bir araya getiren firma, her projede dengeli, uygulanabilir ve karakterli mekânlar üretmeyi hedefler.",
+      p2: "Kurucu ortakların farklı uzmanlık alanlarından gelen tecrübeleri, projelerin hem tasarım hem de uygulama süreçlerinde güçlü ve bütüncül çözümler sunmasını sağlar.",
+      bullets: [
+        "Tasarımdan anahtar teslim uygulamaya kadar tüm süreci tek elden yönetim",
+        "Mimarlık ve mühendisliğin dengesini sağlayan bütüncül yaklaşım",
+        "Müşterilerine güvenilir ve net sonuçlar sunan profesyonel ekip",
+      ],
+    },
+    servicesSection: {
+      eyebrow: "Hizmetlerimiz",
+      title: "Bütüncül Çözümler",
+      description:
+        "Mimari tasarımdan anahtar teslim inşaata kadar, her aşamada profesyonel hizmet sunuyoruz.",
+    },
+    services: [
+      {
+        icon: Palette,
+        title: "Mimari Tasarım",
+        description:
+          "Konsept tasarımından projelendirmeye kadar, vizyonunuzu mekânlara dönüştürüyoruz.",
+      },
+      {
+        icon: Building2,
+        title: "İç Mimari Tasarım",
+        description:
+          "Fonksiyonellik ve estetik mükemmelliğin birleştiği iç mekan çözümleri.",
+      },
+      {
+        icon: Hammer,
+        title: "Anahtar Teslim İnşaat",
+        description:
+          "Temelden çatıya, tüm süreci tek elden yönetip garantili sonuçlar sunuyoruz.",
+      },
+      {
+        icon: Lightbulb,
+        title: "3D Görselleştirme",
+        description:
+          "Projenizi hayata geçirmeden önce detaylı 3D görseller ile görün.",
+      },
+    ],
+    projectsSection: {
+      eyebrow: "Tamamlanan Projeler",
+      title: "Portfolio",
+      description: "Başarıyla tamamladığımız projeler ve müşteri hikayeleri",
+      labels: {
+        location: "Lokasyon",
+        year: "Yıl",
+        area: "Alan",
+        services: "Hizmetler",
+      },
+    },
+    projects: [
+      {
+        title: "Modern Ofis Fit-Out",
+        location: "İstanbul",
+        year: 2024,
+        area: "2500 m²",
+        services: "Tasarım, İç Mimari, Uygulama",
+        image: "/images/project-1.jpg",
+      },
+      {
+        title: "Konut Kompleksi",
+        location: "Denizli",
+        year: 2023,
+        area: "15000 m²",
+        services: "Mimari Tasarım, Anahtar Teslim İnşaat",
+        image: "/images/project-2.jpg",
+      },
+    ],
+    processSection: {
+      eyebrow: "Çalışma Süreci",
+      title: "Adım Adım Yol Haritası",
+      description:
+        "Projenizin başından sonuna kadar takip ettiğimiz sistematik süreç",
+    },
+    processSteps: [
+      {
+        number: "01",
+        title: "İhtiyaç Analizi",
+        summary: "Projenizin gereksinimlerini derinlemesine analiz ediyoruz.",
+        description:
+          "İşlev programı, kullanıcı profili, bütçe ve zaman hedeflerini birlikte netleştiriyoruz. Mevcut alanın ölçüm ve yerinde keşfini yapıp ihtiyaç programı, metraj ve kapsamı raporluyoruz. Bu çıktılar, tasarım kararları ve uygulama planı için ortak referans olur.",
+      },
+      {
+        number: "02",
+        title: "Konsept Tasarım",
+        summary: "Yaratıcı fikirler ve uygulanabilir çözümler geliştiriyoruz.",
+        description: "Yaratıcı fikirler ve uygulanabilir çözümler geliştiriyoruz.",
+      },
+      {
+        number: "03",
+        title: "Projelendirme",
+        summary: "Detaylı teknik çizimler ve uygulama planları hazırlıyoruz.",
+        description: "Detaylı teknik çizimler ve uygulama planları hazırlıyoruz.",
+      },
+      {
+        number: "04",
+        title: "Uygulama",
+        summary:
+          "Şantiye yönetimi ve kalite kontrolü ile projeyi hayata geçiriyoruz.",
+        description:
+          "Şantiye yönetimi ve kalite kontrolü ile projeyi hayata geçiriyoruz.",
+      },
+      {
+        number: "05",
+        title: "Teslim & Sonrası",
+        summary: "Proje teslimi ve uzun vadeli destek sağlıyoruz.",
+        description: "Proje teslimi ve uzun vadeli destek sağlıyoruz.",
+      },
+    ],
+    testimonialsSection: {
+      eyebrow: "Müşteri Yorumları",
+      title: "Başarı Hikayeleri",
+    },
+    testimonials: [
+      {
+        name: "Ahmet Yılmaz",
+        company: "Teknoloji Şirketi",
+        text: "B² Mimarlık ekibi, ofis tasarımında hayal ettiğimiz her detayı gerçekleştirdi. Profesyonellik ve yaratıcılık mükemmel bir şekilde birleştirilmişti.",
+        rating: 5,
+      },
+      {
+        name: "Zeynep Kaya",
+        company: "Perakende Markası",
+        text: "Anahtar teslim hizmetleri sayesinde proje yönetimi çok basit oldu. Başından sonuna kadar güvenilir ve net sonuçlar aldık.",
+        rating: 5,
+      },
+      {
+        name: "Mehmet Demir",
+        company: "İnşaat Şirketi",
+        text: "Mimarlık ve mühendislik dengesini sağlayan yaklaşımları, projelerimizin kalitesini önemli ölçüde artırdı.",
+        rating: 5,
+      },
+    ],
+    blogSection: {
+      eyebrow: "Blog & İçerik",
+      title: "Son Yazılar",
+      description:
+        "Mimarlık, tasarım ve inşaat sektörü hakkında güncel bilgiler",
+      readMore: "Devamını Oku →",
+    },
+    blogPosts: [
+      {
+        title: "2025 Mimarlık Trendleri",
+        excerpt:
+          "Sürdürülebilir tasarım, akıllı binalar ve biofiliğin artan önemi...",
+        date: "16 Şubat 2025",
+      },
+      {
+        title: "Fit-Out Projelerinde Başarı Faktörleri",
+        excerpt:
+          "Zamanlama, bütçe ve iletişim: başarılı fit-out projelerin temel taşları...",
+        date: "10 Şubat 2025",
+      },
+      {
+        title: "Anahtar Teslim İnşaatın Avantajları",
+        excerpt: "Tek bir sorumlu, net sonuçlar ve garantili kalite...",
+        date: "5 Şubat 2025",
+      },
+    ],
+    teamSection: {
+      eyebrow: "Kurucu Ortaklar",
+      title: "Deneyim ve Uzmanlık",
+    },
+    founders: [
+      {
+        name: "Burcu ÇETİN",
+        role: "Mimar / İç Mimar",
+        bio: "Özyeğin Üniversitesi Mimarlık Fakültesi mezunu. İstanbul'da 4 yıllık deneyim ile Trendyol, THY ve kurumsal projelerde aktif rol almıştır.",
+      },
+      {
+        name: "Ahmet Buğra KORALAY",
+        role: "Müteahhit / Proje Yöneticisi",
+        bio: "Celal Bayar Üniversitesi Mühendislik Fakültesi mezunu. Demir-çelik sektöründe edindiği tecrübe ile saha yönetimi ve müşteri ilişkilerini yönetmektedir.",
+      },
+    ],
+    contactSection: {
+      title: "Bize Ulaşın",
+      description:
+        "Projeniz hakkında konuşmak için bize yazın veya arayın. En kısa sürede sizinle iletişime geçeceğiz.",
+      addressLabel: "Adres",
+      phoneLabel: "Telefon",
+      emailLabel: "E-posta",
+      address: "Denizli, Türkiye",
+      form: {
+        nameLabel: "Ad Soyad *",
+        emailLabel: "E-posta *",
+        phoneLabel: "Telefon",
+        projectTypeLabel: "Proje Türü",
+        messageLabel: "Mesaj *",
+        namePlaceholder: "Adınızı girin",
+        emailPlaceholder: "E-posta adresiniz",
+        phonePlaceholder: "Telefon numaranız",
+        projectTypePlaceholder: "Seçiniz...",
+        projectTypeOptions: [
+          { value: "architecture", label: "Mimari Tasarım" },
+          { value: "interior", label: "İç Mimari Tasarım" },
+          { value: "construction", label: "Anahtar Teslim İnşaat" },
+          { value: "other", label: "Diğer" },
+        ],
+        messagePlaceholder: "Projeniz hakkında bilgi verin...",
+        submit: "Teklif Gönder",
+        sending: "Gönderiliyor...",
+      },
+    },
+    footer: {
+      quickLinks: "Hızlı Linkler",
+      contact: "İletişim",
+      rights: "Tüm hakları saklıdır.",
+      links: {
+        about: "Hakkımızda",
+        projects: "Projeler",
+        blog: "Blog",
+      },
+    },
+    toast: {
+      required: "Lütfen tüm zorunlu alanları doldurunuz",
+      success:
+        "Teklif talebiniz gönderildi! En kısa sürede sizinle iletişime geçeceğiz.",
+      error: "Talep gönderilirken bir hata oluştu",
+      unconfigured: "E-posta servisi yapılandırılmamış.",
+      sendFailed: "Talebiniz şu anda gönderilemedi. Lütfen tekrar deneyin.",
+      messageMin: "Mesajınız en az 10 karakter olmalıdır.",
+    },
+  },
+} as const;
+
 export default function Home() {
-  const [, setLocation] = useLocation();
-  const { user } = useAuth();
+  // Auth is currently unused on the marketing page.
+  const { theme, toggleTheme } = useTheme();
+  const contactMutation = trpc.contact.send.useMutation();
+  const [lang, setLang] = useState<Lang>(() => {
+    if (typeof window === "undefined") return "tr";
+    const stored = localStorage.getItem("lang");
+    if (stored === "tr" || stored === "en") return stored;
+    return "tr";
+  });
+  const t = CONTENT[lang];
   const [activeService, setActiveService] = useState(0);
   const [activeProcess, setActiveProcess] = useState(0);
   const [formData, setFormData] = useState({
@@ -27,171 +567,139 @@ export default function Home() {
     message: "",
   });
 
-  const services = [
-    {
-      icon: Palette,
-      title: "Mimari Tasarım",
-      description: "Konsept tasarımından projelendirmeye kadar, vizyonunuzu mekânlara dönüştürüyoruz.",
-    },
-    {
-      icon: Building2,
-      title: "İç Mimari Tasarım",
-      description: "Fonksiyonellik ve estetik mükemmelliğin birleştiği iç mekan çözümleri.",
-    },
-    {
-      icon: Hammer,
-      title: "Anahtar Teslim İnşaat",
-      description: "Temelden çatıya, tüm süreci tek elden yönetip garantili sonuçlar sunuyoruz.",
-    },
-    {
-      icon: Lightbulb,
-      title: "3D Görselleştirme",
-      description: "Projenizi hayata geçirmeden önce detaylı 3D görseller ile görün.",
-    },
-  ];
+  const services = t.services;
+  const processSteps = t.processSteps;
+  const founders = t.founders;
+  const testimonials = t.testimonials;
+  const projects = t.projects;
+  const blogPosts = t.blogPosts;
 
-  const processSteps = [
-    {
-      number: "01",
-      title: "İhtiyaç Analizi",
-      description: "Projenizin gereksinimlerini derinlemesine analiz ediyoruz.",
-    },
-    {
-      number: "02",
-      title: "Konsept Tasarım",
-      description: "Yaratıcı fikirler ve uygulanabilir çözümler geliştiriyoruz.",
-    },
-    {
-      number: "03",
-      title: "Projelendirme",
-      description: "Detaylı teknik çizimler ve uygulama planları hazırlıyoruz.",
-    },
-    {
-      number: "04",
-      title: "Uygulama",
-      description: "Şantiye yönetimi ve kalite kontrolü ile projeyi hayata geçiriyoruz.",
-    },
-    {
-      number: "05",
-      title: "Teslim & Sonrası",
-      description: "Proje teslimi ve uzun vadeli destek sağlıyoruz.",
-    },
-  ];
-
-  const founders = [
-    {
-      name: "Burcu ÇETİN",
-      role: "Mimar / İç Mimar",
-      bio: "Özyeğin Üniversitesi Mimarlık Fakültesi mezunu. İstanbul'da 4 yıllık deneyim ile Trendyol, THY ve kurumsal projelerde aktif rol almıştır.",
-    },
-    {
-      name: "Ahmet Buğra KORALAY",
-      role: "Müteahhit / Proje Yöneticisi",
-      bio: "Celal Bayar Üniversitesi Mühendislik Fakültesi mezunu. Demir-çelik sektöründe edindiği tecrübe ile saha yönetimi ve müşteri ilişkilerini yönetmektedir.",
-    },
-  ];
-
-  const testimonials = [
-    {
-      name: "Ahmet Yılmaz",
-      company: "Teknoloji Şirketi",
-      text: "b² Mimarlık ekibi, ofis tasarımında hayal ettiğimiz her detayı gerçekleştirdi. Profesyonellik ve yaratıcılık mükemmel bir şekilde birleştirilmişti.",
-      rating: 5,
-    },
-    {
-      name: "Zeynep Kaya",
-      company: "Perakende Markası",
-      text: "Anahtar teslim hizmetleri sayesinde proje yönetimi çok basit oldu. Başından sonuna kadar güvenilir ve net sonuçlar aldık.",
-      rating: 5,
-    },
-    {
-      name: "Mehmet Demir",
-      company: "İnşaat Şirketi",
-      text: "Mimarlık ve mühendislik dengesini sağlayan yaklaşımları, projelerimizin kalitesini önemli ölçüde artırdı.",
-      rating: 5,
-    },
-  ];
-
-  const projects = [
-    {
-      title: "Modern Ofis Fit-Out",
-      location: "İstanbul",
-      year: 2024,
-      area: "2500 m²",
-      services: "Tasarım, İç Mimari, Uygulama",
-      image: "https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/i2WddQ6dy1MHiAL9rQlBl8-img-3_1771263281000_na1fn_aW50ZXJpb3ItZGVzaWduLWZpdG91dA.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L2kyV2RkUTZkeTFNSGlBTDlyUWxCbDgtaW1nLTNfMTc3MTI2MzI4MTAwMF9uYTFmbl9hVzUwWlhKcGIzSXRaR1Z6YVdkdUxXWnBkRzkxZEEucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=ieFBXNBhTkYn~kVbOZFG-8RlxF~wohrfdrdk9szPMjb5lIOBN21Dsvobp8035vFcDmCAUnDgTx~SolQsv-jATVbVEpVb4yyctawgArDJYL9BBV4shDFWnhvqwWU9yf3LACKtBVeopKBeUS4UWXLham0XG9Q-xVTbxKkGMFYeXcvtb0iphOidY7EbVrUVhtmzvluKt5Q~KH1qzuWQFg18OpDkMcv0c1UNCiSm~2LDmeoIOyXUNx54~YnnWWqeBJ8nbkrpYDRtmkub3NNmGttx~oszhUEEY0wb6xneCwPcgr2PZHQ8U0LJz~aISX~MdVBI~moPEie86zDAsz7Aul9wMw__",
-    },
-    {
-      title: "Konut Kompleksi",
-      location: "Denizli",
-      year: 2023,
-      area: "15000 m²",
-      services: "Mimari Tasarım, Anahtar Teslim İnşaat",
-      image: "https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/i2WddQ6dy1MHiAL9rQlBl8-img-2_1771263280000_na1fn_bW9kZXJuLWFyY2hpdGVjdHVyZS1leHRlcmlvcg.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L2kyV2RkUTZkeTFNSGlBTDlyUWxCbDgtaW1nLTJfMTc3MTI2MzI4MDAwMF9uYTFmbl9iVzlrWlhKdUxXRnlZMmhwZEdWamRIVnlaUzFsZUhSbGNtbHZjZy5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=PhRIxML~CY5XWecep2BBVqKxvrOBGl4X20sAncGOPtuXigzgHB8zR48n4igl-~Qxw6P~ifShz~gBOKkEmSzlCr860DvddFmdUAqprYsiyK3kK1ONDEAVBaVhc85XenMrUNnmy84Hmjid9JarppmWKmEi~96mlrXsTt9wT94YderQ6EGVYStmmysZAoesOz8mwQ7sHZbShJ94Kwz2gwGMz8FOlV2oVKDqNEbvzNbloVnY0Hm5s9hRwrael8B8GGtyneIhI5U35piJfPqa3bEA5W07jNHOZGs44rL45bRUykT~KB5-Uo~bsE-qSmbtGDOyPci18MIEIpI7wVqQ8i884g__",
-    },
-  ];
-
-  const blogPosts = [
-    {
-      title: "2025 Mimarlık Trendleri",
-      excerpt: "Sürdürülebilir tasarım, akıllı binalar ve biofiliğin artan önemi...",
-      date: "16 Şubat 2025",
-    },
-    {
-      title: "Fit-Out Projelerinde Başarı Faktörleri",
-      excerpt: "Zamanlama, bütçe ve iletişim: başarılı fit-out projelerin temel taşları...",
-      date: "10 Şubat 2025",
-    },
-    {
-      title: "Anahtar Teslim İnşaatın Avantajları",
-      excerpt: "Tek bir sorumlu, net sonuçlar ve garantili kalite...",
-      date: "5 Şubat 2025",
-    },
-  ];
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    localStorage.setItem("lang", lang);
+    document.documentElement.lang = lang;
+    document.title = t.meta.title;
+    const setMeta = (selector: string, value: string) => {
+      const el = document.querySelector(selector);
+      if (el) {
+        el.setAttribute("content", value);
+      }
+    };
+    setMeta('meta[name="description"]', t.meta.description);
+    setMeta('meta[name="keywords"]', t.meta.keywords);
+    setMeta('meta[property="og:title"]', t.meta.ogTitle);
+    setMeta('meta[property="og:description"]', t.meta.ogDescription);
+    setMeta('meta[property="og:locale"]', t.meta.ogLocale);
+    setMeta('meta[name="twitter:title"]', t.meta.twitterTitle);
+    setMeta('meta[name="twitter:description"]', t.meta.twitterDescription);
+  }, [lang, t.meta]);
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Lütfen tüm zorunlu alanları doldurunuz");
+      toast.error(t.toast.required);
+      return;
+    }
+
+    if (formData.message.trim().length < 10) {
+      toast.error(t.toast.messageMin);
       return;
     }
 
     try {
-      // Placeholder: Backend entegrasyonu için hazır
-      toast.success("Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz.");
+      const result = await contactMutation.mutateAsync({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim() || undefined,
+        projectType: formData.projectType || undefined,
+        message: formData.message.trim(),
+      });
+
+      if (!result.success) {
+        if ("code" in result) {
+          if (result.code === "MAILER_NOT_CONFIGURED") {
+            toast.error(t.toast.unconfigured);
+          } else if (result.code === "MAILER_SEND_FAILED") {
+            toast.error(t.toast.sendFailed);
+          } else {
+            toast.error(t.toast.error);
+          }
+        } else {
+          toast.error(t.toast.error);
+        }
+        return;
+      }
+
+      toast.success(t.toast.success);
       setFormData({ name: "", email: "", phone: "", projectType: "", message: "" });
     } catch (error) {
-      toast.error("Mesaj gönderilirken bir hata oluştu");
+      if (error instanceof TRPCClientError) {
+        const zodError = error.data?.zodError;
+        if (zodError?.fieldErrors?.message) {
+          toast.error(t.toast.messageMin);
+          return;
+        }
+        if (error.data?.code === "BAD_REQUEST") {
+          toast.error(t.toast.required);
+          return;
+        }
+      }
+      toast.error(t.toast.error);
     }
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-border">
+      <nav className="sticky top-0 z-50 bg-card border-b border-border animate-in">
         <div className="container flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-sm flex items-center justify-center">
-              <span className="text-white font-bold text-sm">b²</span>
+              <span className="text-primary-foreground font-bold text-sm">{t.brandShort}</span>
             </div>
-            <span className="font-bold text-lg text-primary">b² Mimarlık</span>
+            <span className="font-bold text-lg text-primary">{t.brandNav}</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#hakkimizda" className="text-sm hover:text-accent transition-colors">Hakkımızda</a>
-            <a href="#projeler" className="text-sm hover:text-accent transition-colors">Projeler</a>
-            <a href="#hizmetler" className="text-sm hover:text-accent transition-colors">Hizmetler</a>
-            <a href="#blog" className="text-sm hover:text-accent transition-colors">Blog</a>
-            <a href="#iletisim" className="text-sm hover:text-accent transition-colors">İletişim</a>
+            <a href="#about" className="text-sm hover:text-accent transition-colors">{t.nav.about}</a>
+            <a href="#projects" className="text-sm hover:text-accent transition-colors">{t.nav.projects}</a>
+            <a href="#services" className="text-sm hover:text-accent transition-colors">{t.nav.services}</a>
+            <a href="#blog" className="text-sm hover:text-accent transition-colors">{t.nav.blog}</a>
+            <a href="#contact" className="text-sm hover:text-accent transition-colors">{t.nav.contact}</a>
           </div>
-          <Button className="bg-accent hover:bg-accent/90 text-white" onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}>
-            İletişime Geç
-          </Button>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => toggleTheme?.()}
+              aria-label={t.nav.themeAria}
+              aria-pressed={theme === "dark"}
+              className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-primary shadow-sm transition-all hover:shadow-md hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+            >
+              <span className="absolute inset-0 rounded-full bg-gradient-to-tr from-accent/25 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></span>
+              {theme === "dark" ? (
+                <Sun className="relative h-5 w-5" />
+              ) : (
+                <Moon className="relative h-5 w-5" />
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => setLang(lang === "tr" ? "en" : "tr")}
+              aria-label={t.nav.langAria}
+              className="group relative inline-flex h-10 px-3 items-center justify-center rounded-full border border-border bg-card text-primary text-xs font-semibold uppercase tracking-wider shadow-sm transition-all hover:shadow-md hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+            >
+              <span className="absolute inset-0 rounded-full bg-gradient-to-tr from-accent/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></span>
+              <span className="relative">{lang === "tr" ? "EN" : "TR"}</span>
+            </button>
+            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}>
+              {t.nav.cta}
+            </Button>
+          </div>
         </div>
       </nav>
 
       {/* Left Accent Line */}
-      <div className="fixed left-0 top-0 w-1 h-full bg-gradient-to-b from-accent via-accent to-accent/30"></div>
+      <div className="fixed left-0 top-0 w-1 h-full bg-gradient-to-b from-accent via-accent to-accent/30 animate-pulse-glow"></div>
 
       {/* Hero Section */}
       <section className="relative pt-20 pb-32 overflow-hidden">
@@ -199,72 +707,72 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8 animate-in fade-in slide-in-from-left-4 duration-700">
               <div className="space-y-4">
-                <p className="text-accent font-semibold text-sm tracking-wide uppercase">İki Çizgi, Tek İmza</p>
+                <p className="text-accent font-semibold text-sm tracking-wide uppercase">{t.hero.eyebrow}</p>
                 <h1 className="text-5xl lg:text-6xl font-bold text-primary leading-tight">
-                  Mimarlık ve Mühendisliğin Kesişimi
+                  {t.hero.title}
                 </h1>
                 <p className="text-lg text-foreground/70 leading-relaxed max-w-lg">
-                  b² Mimarlık & İnşaat, tasarım ve uygulamayı tek çatı altında buluşturarak, bütüncül ve uygulanabilir çözümler üretir.
+                  {t.hero.description}
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white" onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}>
-                  Proje Başlat <ArrowRight className="ml-2 w-4 h-4" />
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}>
+                  {t.hero.primaryCta} <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/5" onClick={() => document.getElementById("hakkimizda")?.scrollIntoView({ behavior: "smooth" })}>
-                  Daha Fazla Bilgi
+                <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/5" onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}>
+                  {t.hero.secondaryCta}
                 </Button>
               </div>
             </div>
             <div className="relative h-96 lg:h-full animate-in fade-in slide-in-from-right-4 duration-700 delay-200">
               <img
-                src="https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/Yoqdi08PzPUgK4IIshzkIy-img-1_1771264634000_na1fn_bW9kZXJuLW9mZmljZS1pbnRlcmlvcg.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L1lvcWRpMDhQelBVZ0s0SUlzaHprSXktaW1nLTFfMTc3MTI2NDYzNDAwMF9uYTFmbl9iVzlrWlhKdUxXOW1abWxqWlMxcGJuUmxjbWx2Y2cuanBnP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=IDRxcrRn9PohRTkAV7jkLRJkw15BKOkf4CF4hb13snRMJ8v~nUTx-cJtIPl-QFetErfLno0YtDg2xli3bzn~-Kjc6gc4HAaKZtwB6Lq~tgvrfLNeEqN9I0XpxJy-tRke4clNC~Oxnqpyc2RjQmZ1Dbtnrcx~ytH61v9KbnSERDPnnl3aMW3ytvJmL1zmDYSFqedqbDIIvFSkcUUhPGOhbrjy3KdznWY~UcABnFKUx03ZqI9cF~BPtsHtcwuLTtFWovgQ6ppcibfMHKuue5sChvuCJgsQZCs-x0D7y3lbq-I9D2ucNo8Ckf0CC61D8637uyKz-U1GDGG1ldF-Cgq5zQ__"
-                alt="Modern Office"
-                className="w-full h-full object-cover rounded-lg shadow-2xl"
+                src="/images/hero.jpg"
+                alt="Modern Office Interior"
+                className="w-full h-full object-cover rounded-lg shadow-2xl animate-float-soft palette-image"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-lg"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-lg pointer-events-none"></div>
             </div>
           </div>
         </div>
 
         {/* Diagonal Divider */}
-        <svg className="absolute bottom-0 left-0 w-full h-24 text-white" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <svg className="absolute bottom-0 left-0 w-full h-24 text-background" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="currentColor" />
         </svg>
       </section>
 
       {/* About Section */}
-      <section id="hakkimizda" className="py-32 bg-white">
+      <section id="about" className="py-32 bg-background">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-6 order-2 lg:order-1">
-              <h2 className="text-4xl font-bold text-primary">Hakkımızda</h2>
+            <div className="space-y-6 order-2 lg:order-1 animate-in slide-in-from-left-4 duration-700">
+              <h2 className="text-4xl font-bold text-primary">{t.about.title}</h2>
               <p className="text-foreground/70 leading-relaxed">
-                b² Mimarlık & İnşaat, iki farklı disiplinin ortak aklından doğan bir tasarım ve yapım ofisidir. Mimari tasarım ile mühendislik ve saha deneyimini bir araya getiren firma, her projede dengeli, uygulanabilir ve karakterli mekânlar üretmeyi hedefler.
+                {t.about.p1}
               </p>
               <p className="text-foreground/70 leading-relaxed">
-                Kurucu ortakların farklı uzmanlık alanlarından gelen tecrübeleri, projelerin hem tasarım hem de uygulama süreçlerinde güçlü ve bütüncül çözümler sunmasını sağlar.
+                {t.about.p2}
               </p>
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                  <p className="text-foreground">Tasarımdan anahtar teslim uygulamaya kadar tüm süreci tek elden yönetim</p>
+                  <p className="text-foreground">{t.about.bullets[0]}</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                  <p className="text-foreground">Mimarlık ve mühendisliğin dengesini sağlayan bütüncül yaklaşım</p>
+                  <p className="text-foreground">{t.about.bullets[1]}</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                  <p className="text-foreground">Müşterilerine güvenilir ve net sonuçlar sunan profesyonel ekip</p>
+                  <p className="text-foreground">{t.about.bullets[2]}</p>
                 </div>
               </div>
             </div>
-            <div className="order-1 lg:order-2">
+            <div className="order-1 lg:order-2 animate-in slide-in-from-right-4 duration-700">
               <img
-                src="https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/Yoqdi08PzPUgK4IIshzkIy-img-2_1771264636000_na1fn_bHV4dXJ5LXJlc2lkZW50aWFsLWJ1aWxkaW5n.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L1lvcWRpMDhQelBVZ0s0SUlzaHprSXktaW1nLTJfMTc3MTI2NDYzNjAwMF9uYTFmbl9iSHY0ZFhKNUxYSmxjMmxrWlc1MGFXRnNMV0oxYVd4a2FXNW4uanBnP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=goaJWpg3XbOU3gujGVJoCMjI18JT83AUJI3N17SnqEv4S4e5ASuSUPdfmZ7bJOvqEvHe7asmDtxCHGNb60FXmPnqmOWbL0DtqYbmTRiB6IXqOpvnUuv3VzOYjrDZXwELXz9zpCKcYSEIQPr3y6DsEGEnRuYsDA8dzVyf78~ZE2eNc7S7KIKJ5RZ2GwiCOpG4bwgOPuqj74rxmUfERiC2sXFhJyB1qoQjB5rS0AB7-jKP2kZyI4qPXzsvN3hl9T-kSJ7QAAQgZM8WjqGE5bSzPx3RCK3wtKQrR6So1eztdgNps4bgQ7a8X6y1eoUCj06EuExs9vAAjhHjgo9lRufrAQ__"
-                alt="Modern Architecture"
-                className="w-full h-96 object-cover rounded-lg shadow-xl"
+                src="/images/about.jpg"
+                alt="Modern Living Room Interior"
+                className="w-full h-96 object-cover rounded-lg shadow-xl animate-float-soft palette-image"
               />
             </div>
           </div>
@@ -272,13 +780,13 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="hizmetler" className="py-32 bg-background">
+      <section id="services" className="py-32 bg-background">
         <div className="container">
-          <div className="text-center mb-16 space-y-4">
-            <p className="text-accent font-semibold text-sm tracking-wide uppercase">Hizmetlerimiz</p>
-            <h2 className="text-4xl font-bold text-primary">Bütüncül Çözümler</h2>
+          <div className="text-center mb-16 space-y-4 animate-in">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase">{t.servicesSection.eyebrow}</p>
+            <h2 className="text-4xl font-bold text-primary">{t.servicesSection.title}</h2>
             <p className="text-foreground/70 max-w-2xl mx-auto">
-              Mimari tasarımdan anahtar teslim inşaata kadar, her aşamada profesyonel hizmet sunuyoruz.
+              {t.servicesSection.description}
             </p>
           </div>
 
@@ -288,11 +796,11 @@ export default function Home() {
               return (
                 <div
                   key={idx}
-                  className="group p-8 bg-white rounded-lg border border-border hover:border-accent hover:shadow-lg transition-all duration-300 cursor-pointer"
+                  className="group p-8 bg-card rounded-lg border border-border hover:border-accent hover:shadow-lg transition-all duration-300 cursor-pointer hover-lift animate-in"
                   onMouseEnter={() => setActiveService(idx)}
                 >
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-accent group-hover:text-white transition-all">
-                    <Icon className="w-6 h-6 text-accent group-hover:text-white" />
+                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-accent group-hover:text-accent-foreground transition-all">
+                    <Icon className="w-6 h-6 text-accent group-hover:text-accent-foreground" />
                   </div>
                   <h3 className="text-xl font-bold text-primary mb-3">{service.title}</h3>
                   <p className="text-foreground/70 leading-relaxed">{service.description}</p>
@@ -304,44 +812,40 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section id="projeler" className="py-32 bg-white">
+      <section id="projects" className="py-32 bg-background">
         <div className="container">
-          <div className="text-center mb-16 space-y-4">
-            <p className="text-accent font-semibold text-sm tracking-wide uppercase">Tamamlanan Projeler</p>
-            <h2 className="text-4xl font-bold text-primary">Portfolio</h2>
+          <div className="text-center mb-16 space-y-4 animate-in">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase">{t.projectsSection.eyebrow}</p>
+            <h2 className="text-4xl font-bold text-primary">{t.projectsSection.title}</h2>
             <p className="text-foreground/70 max-w-2xl mx-auto">
-              Başarıyla tamamladığımız projeler ve müşteri hikayeleri
+              {t.projectsSection.description}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project, idx) => {
-              const projectImages = [
-                "https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/Yoqdi08PzPUgK4IIshzkIy-img-4_1771264634000_na1fn_Y29tbWVyY2lhbC1vZmZpY2Utc3BhY2U.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L1lvcWRpMDhQelBVZ0s0SUlzaHprSXktaW1nLTRfMTc3MTI2NDYzNDAwMF9uYTFmbl9ZMjl0YldWeVkybGhiQzF2Wm1acFkyVXRjM0JoWTJVLmpwZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=Op0hfp9KgiXZcjA2JuMNpVxaLoJokZBtqGcSbCjA~QLErn~~VK~CzspMP-e4CLmOGXUdYcv8o~ew77lbvL4a4h1PMf81XGn87arSfsqPPvcYMWoW6R5ipyBOx0ikJTrlkT-U2fH0sgPVCmLijSJyD976Xt~ZAKMgfS7bldWOA67GXDnVnf3tgyZ~YMOKVLtAJBnMxlX-iDkjOJzKoFuwvV--NCNr4BcPw77ifAxxiRDiLMLwQhhqYtMeB-qaf~ABLYB0EDD6pqdXcS25GhirIj-FZIT5uWJ700TMMBps~INGgMoLIpt~gGaf-JsjPvvNIfPY4Cf6n-lFxbYGCtN~IQ__",
-                "https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/Yoqdi08PzPUgK4IIshzkIy-img-3_1771264635000_na1fn_aW50ZXJpb3ItZGVzaWduLWxpdmluZy1zcGFjZQ.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L1lvcWRpMDhQelBVZ0s0SUlzaHprSXktaW1nLTNfMTc3MTI2NDYzNTAwMF9uYTFmbl9hVzUwWlhKcGIzSXRaR1Z6YVdkdUxXeHBkbWx1WnkxemNHRmpaUS5qcGc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=hwUMehDcYeTZFea07SjJNSMpy03vI0--ALPjxmnc4pDzSMnj6wXjxneCSNA8ng3YAWfxbc0Yo3aTJcTakIpuRGlL8R-M7FVS9wcjm68-RIYHhF~uU0ezkOzFMtiiV47JiyrBaneMOQa1ZZoCXsLrCrWeO-mPZl6KOAR4gQCqZ5Pfi2EZPjjmDvQLrS7UaxTrQQ8-PRNnBwuJfDpAYTbCGvamIeP73MPuIlEYIXt7lU5ehbG2PNpFpn2gWn413dHDb602WcFIq28I6seJGrC6Tklt~TYKapFr0Lf3cWzLgf04kWWy1VeiJakKAnXgESUpRMmnYM0SUQZpo3daINtWJA__"
-              ];
               return (
-              <div key={idx} className="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all">
+              <div key={idx} className="group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all hover-lift animate-in">
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={projectImages[idx] || project.image}
+                    src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 palette-image"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                    <div className="text-white">
+                    <div className="text-primary-foreground">
                       <h3 className="text-xl font-bold mb-2">{project.title}</h3>
                       <p className="text-sm">{project.services}</p>
                     </div>
                   </div>
                 </div>
-                <div className="p-6 bg-white">
+                <div className="p-6 bg-card">
                   <h3 className="text-lg font-bold text-primary mb-3">{project.title}</h3>
                   <div className="space-y-2 text-sm text-foreground/70">
-                    <p><strong>Lokasyon:</strong> {project.location}</p>
-                    <p><strong>Yıl:</strong> {project.year}</p>
-                    <p><strong>Alan:</strong> {project.area}</p>
-                    <p><strong>Hizmetler:</strong> {project.services}</p>
+                    <p><strong>{t.projectsSection.labels.location}:</strong> {project.location}</p>
+                    <p><strong>{t.projectsSection.labels.year}:</strong> {project.year}</p>
+                    <p><strong>{t.projectsSection.labels.area}:</strong> {project.area}</p>
+                    <p><strong>{t.projectsSection.labels.services}:</strong> {project.services}</p>
                   </div>
                 </div>
               </div>
@@ -352,26 +856,26 @@ export default function Home() {
       </section>
 
       {/* Process Section */}
-      <section id="surec" className="py-32 bg-background">
+      <section id="process" className="py-32 bg-background">
         <div className="container">
-          <div className="text-center mb-16 space-y-4">
-            <p className="text-accent font-semibold text-sm tracking-wide uppercase">Çalışma Süreci</p>
-            <h2 className="text-4xl font-bold text-primary">Adım Adım Yol Haritası</h2>
+          <div className="text-center mb-16 space-y-4 animate-in">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase">{t.processSection.eyebrow}</p>
+            <h2 className="text-4xl font-bold text-primary">{t.processSection.title}</h2>
             <p className="text-foreground/70 max-w-2xl mx-auto">
-              Projenizin başından sonuna kadar takip ettiğimiz sistematik süreç
+              {t.processSection.description}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-2">
             {processSteps.map((step, idx) => (
-              <div key={idx} className="relative">
+              <div key={idx} className="relative h-full">
                 <div
-                  className="p-6 bg-white rounded-lg border-2 border-border hover:border-accent hover:bg-accent/5 transition-all cursor-pointer text-center"
+                  className="min-h-[170px] h-full p-6 bg-card rounded-lg border-2 border-border hover:border-accent hover:bg-accent/5 transition-all cursor-pointer text-center flex flex-col items-center justify-start gap-2 hover-lift animate-in"
                   onMouseEnter={() => setActiveProcess(idx)}
                 >
                   <div className="text-3xl font-bold text-accent mb-2">{step.number}</div>
                   <h3 className="text-sm font-bold text-primary mb-2">{step.title}</h3>
-                  <p className="text-xs text-foreground/60 hidden md:block">{step.description}</p>
+                  <p className="text-xs text-foreground/60 hidden md:block line-clamp-2">{step.summary}</p>
                 </div>
                 {idx < processSteps.length - 1 && (
                   <div className="hidden md:block absolute top-1/2 -right-2 w-4 h-0.5 bg-border"></div>
@@ -380,7 +884,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-12 p-8 bg-accent/5 rounded-lg border border-accent/20">
+          <div key={activeProcess} className="mt-12 p-8 bg-accent/5 rounded-lg border border-accent/20 animate-in">
             <h3 className="text-2xl font-bold text-primary mb-4">{processSteps[activeProcess].title}</h3>
             <p className="text-foreground/70 leading-relaxed">{processSteps[activeProcess].description}</p>
           </div>
@@ -388,16 +892,16 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-32 bg-white">
+      <section className="py-32 bg-background">
         <div className="container">
-          <div className="text-center mb-16 space-y-4">
-            <p className="text-accent font-semibold text-sm tracking-wide uppercase">Müşteri Yorumları</p>
-            <h2 className="text-4xl font-bold text-primary">Başarı Hikayeleri</h2>
+          <div className="text-center mb-16 space-y-4 animate-in">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase">{t.testimonialsSection.eyebrow}</p>
+            <h2 className="text-4xl font-bold text-primary">{t.testimonialsSection.title}</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, idx) => (
-              <div key={idx} className="p-8 bg-background rounded-lg border border-border hover:border-accent transition-all">
+              <div key={idx} className="p-8 bg-card rounded-lg border border-border hover:border-accent transition-all hover-lift animate-in">
                 <div className="flex gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-accent text-accent" />
@@ -417,22 +921,22 @@ export default function Home() {
       {/* Blog Section */}
       <section id="blog" className="py-32 bg-background">
         <div className="container">
-          <div className="text-center mb-16 space-y-4">
-            <p className="text-accent font-semibold text-sm tracking-wide uppercase">Blog & İçerik</p>
-            <h2 className="text-4xl font-bold text-primary">Son Yazılar</h2>
+          <div className="text-center mb-16 space-y-4 animate-in">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase">{t.blogSection.eyebrow}</p>
+            <h2 className="text-4xl font-bold text-primary">{t.blogSection.title}</h2>
             <p className="text-foreground/70 max-w-2xl mx-auto">
-              Mimarlık, tasarım ve inşaat sektörü hakkında güncel bilgiler
+              {t.blogSection.description}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogPosts.map((post, idx) => (
-              <div key={idx} className="p-6 bg-white rounded-lg border border-border hover:border-accent hover:shadow-lg transition-all cursor-pointer">
+              <div key={idx} className="p-6 bg-card rounded-lg border border-border hover:border-accent hover:shadow-lg transition-all cursor-pointer hover-lift animate-in">
                 <p className="text-sm text-accent mb-2">{post.date}</p>
                 <h3 className="text-xl font-bold text-primary mb-3">{post.title}</h3>
                 <p className="text-foreground/70 mb-4">{post.excerpt}</p>
                 <a href="#" className="text-accent font-semibold hover:text-accent/80 transition-colors">
-                  Devamını Oku →
+                  {t.blogSection.readMore}
                 </a>
               </div>
             ))}
@@ -441,18 +945,18 @@ export default function Home() {
       </section>
 
       {/* Team Section */}
-      <section className="py-32 bg-white">
+      <section className="py-32 bg-background">
         <div className="container">
-          <div className="text-center mb-16 space-y-4">
-            <p className="text-accent font-semibold text-sm tracking-wide uppercase">Kurucu Ortaklar</p>
-            <h2 className="text-4xl font-bold text-primary">Deneyim ve Uzmanlık</h2>
+          <div className="text-center mb-16 space-y-4 animate-in">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase">{t.teamSection.eyebrow}</p>
+            <h2 className="text-4xl font-bold text-primary">{t.teamSection.title}</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {founders.map((founder, idx) => (
-              <div key={idx} className="space-y-4">
+              <div key={idx} className="space-y-4 hover-lift animate-in">
                 <div className="h-64 bg-gradient-to-br from-accent/20 to-primary/10 rounded-lg flex items-center justify-center">
-                  <Users className="w-24 h-24 text-accent/30" />
+                  <Users className="w-24 h-24 text-accent/30 animate-float-soft" />
                 </div>
                 <h3 className="text-2xl font-bold text-primary">{founder.name}</h3>
                 <p className="text-accent font-semibold text-sm">{founder.role}</p>
@@ -464,105 +968,126 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="iletisim" className="py-32 bg-primary text-white relative overflow-hidden">
+      <section id="contact" className="py-32 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <img
-            src="https://private-us-east-1.manuscdn.com/sessionFile/vfzoHZmUVWjaWXJmj9o67r/sandbox/i2WddQ6dy1MHiAL9rQlBl8-img-5_1771263278000_na1fn_YWJzdHJhY3QtYXJjaGl0ZWN0dXJlLXBhdHRlcm4.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdmZ6b0habXVWV2phV1hKbWo5bzY3ci9zYW5kYm94L2kyV2RkUTZkeTFNSGlBTDlyUWxCbDgtaW1nLTVfMTc3MTI2MzI3ODAwMF9uYTFmbl9ZV0p6ZEhKaFkzUXRZWEpqYUdsMFpXTjBkWEpsTFhCaGRIUmxjbTQucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=IrxOAazbn5aH0SwAWYJOmbDDGEkwUu~nNEyvcwFCci3aKmgy8Q-4kHHbFKIY3gdiOzf6ilrCQVuOoRpzyFVE5FywJ1mJrC0QrO3IHzQpLUQJqEY0pc9c3B~rFBvSvuu2rPkXGfOiy01mB8p6dnQGdmtKuNkiBaeKJFixYhshD1dO7xPJOmvjqXl7Fpitewp-~WiSu8cc3EcqA2V6rnN9HRvamxvJMex~EJGBeW3fkwRX970AYfmfOK1P2IkyexDqIRffKYWgUxc2A6OMbuVVcAMQZR4d8N58YDcUiLpN4psUXuRUiigvEz9Dj1ylhdak5~V2AeRo8iFnFUPVnEA2HA__"
-            alt="Pattern"
-            className="w-full h-full object-cover"
+            src="https://media.altphotos.com/cache/images/2018/01/30/05/752/facade-geometric-lines.jpg"
+            alt="Architectural Pattern"
+            className="w-full h-full object-cover palette-image"
           />
         </div>
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-8">
+            <div className="space-y-8 animate-in">
               <div>
-                <h2 className="text-4xl font-bold mb-4">Bize Ulaşın</h2>
-                <p className="text-white/80">
-                  Projeniz hakkında konuşmak için bize yazın veya arayın. En kısa sürede sizinle iletişime geçeceğiz.
+                <h2 className="text-4xl font-bold mb-4">{t.contactSection.title}</h2>
+                <p className="text-primary-foreground/80">
+                  {t.contactSection.description}
                 </p>
               </div>
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
                   <MapPin className="w-6 h-6 mt-1 flex-shrink-0" />
                   <div>
-                    <p className="font-semibold">Adres</p>
-                    <p className="text-white/80">Denizli, Türkiye</p>
+                    <p className="font-semibold">{t.contactSection.addressLabel}</p>
+                    <p className="text-primary-foreground/80">{t.contactSection.address}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Phone className="w-6 h-6 mt-1 flex-shrink-0" />
                   <div>
-                    <p className="font-semibold">Telefon</p>
-                    <p className="text-white/80">+90 555 838 67 22</p>
+                    <p className="font-semibold">{t.contactSection.phoneLabel}</p>
+                    <a
+                      href="tel:+905558386722"
+                      className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                    >
+                      +90 555 838 67 22
+                    </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Mail className="w-6 h-6 mt-1 flex-shrink-0" />
                   <div>
-                    <p className="font-semibold">E-posta</p>
-                    <p className="text-white/80">info@bkare-mimarlik.com</p>
+                    <p className="font-semibold">{t.contactSection.emailLabel}</p>
+                    <a
+                      href="mailto:info@bkare-mimarlik.com"
+                      className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                    >
+                      info@bkare-mimarlik.com
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Contact Form */}
-            <form id="contact-form" onSubmit={handleFormSubmit} className="space-y-4 bg-white/10 backdrop-blur p-8 rounded-lg">
+            <form id="contact-form" onSubmit={handleFormSubmit} className="space-y-4 bg-primary-foreground/10 backdrop-blur p-8 rounded-lg animate-in">
               <div>
-                <label className="block text-sm font-semibold mb-2">Ad Soyad *</label>
+                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.nameLabel}</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-accent"
-                  placeholder="Adınızı girin"
+                  required
+                  minLength={2}
+                  className="w-full px-4 py-2 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground placeholder-primary-foreground/50 focus:outline-none focus:border-accent"
+                  placeholder={t.contactSection.form.namePlaceholder}
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">E-posta *</label>
+                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.emailLabel}</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-accent"
-                  placeholder="E-posta adresiniz"
+                  required
+                  className="w-full px-4 py-2 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground placeholder-primary-foreground/50 focus:outline-none focus:border-accent"
+                  placeholder={t.contactSection.form.emailPlaceholder}
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">Telefon</label>
+                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.phoneLabel}</label>
                 <input
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-accent"
-                  placeholder="Telefon numaranız"
+                  className="w-full px-4 py-2 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground placeholder-primary-foreground/50 focus:outline-none focus:border-accent"
+                  placeholder={t.contactSection.form.phonePlaceholder}
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">Proje Türü</label>
+                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.projectTypeLabel}</label>
                 <select
                   value={formData.projectType}
                   onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                  className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:border-accent"
+                  className="w-full px-4 py-2 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground focus:outline-none focus:border-accent"
                 >
-                  <option value="">Seçiniz...</option>
-                  <option value="mimari">Mimari Tasarım</option>
-                  <option value="ic-mimari">İç Mimari Tasarım</option>
-                  <option value="insaat">Anahtar Teslim İnşaat</option>
-                  <option value="diger">Diğer</option>
+                  <option value="">{t.contactSection.form.projectTypePlaceholder}</option>
+                  {t.contactSection.form.projectTypeOptions.map(option => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">Mesaj *</label>
+                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.messageLabel}</label>
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-accent h-32 resize-none"
-                  placeholder="Projeniz hakkında bilgi verin..."
+                  required
+                  minLength={10}
+                  className="w-full px-4 py-2 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground placeholder-primary-foreground/50 focus:outline-none focus:border-accent h-32 resize-none"
+                  placeholder={t.contactSection.form.messagePlaceholder}
                 />
               </div>
-              <Button className="w-full bg-accent hover:bg-accent/90 text-primary font-semibold" type="submit">
-                Mesaj Gönder
+              <Button
+                className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                type="submit"
+                disabled={contactMutation.isPending}
+                aria-busy={contactMutation.isPending}
+              >
+                {contactMutation.isPending ? t.contactSection.form.sending : t.contactSection.form.submit}
               </Button>
             </form>
           </div>
@@ -576,24 +1101,29 @@ export default function Home() {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-gradient-to-br from-primary to-accent rounded-sm flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">b²</span>
+                  <span className="text-primary-foreground font-bold text-xs">{t.brandShort}</span>
                 </div>
-                <span className="font-bold text-primary">b² Mimarlık & İnşaat</span>
+                <span className="font-bold text-primary">{t.brand}</span>
               </div>
-              <p className="text-sm text-foreground/60">İki Çizgi, Tek İmza</p>
+              <p className="text-sm text-foreground/60">{t.tagline}</p>
             </div>
             <div>
-              <h4 className="font-semibold text-primary mb-3">Hızlı Linkler</h4>
+              <h4 className="font-semibold text-primary mb-3">{t.footer.quickLinks}</h4>
               <ul className="space-y-2 text-sm text-foreground/60">
-                <li><a href="#hakkimizda" className="hover:text-accent transition-colors">Hakkımızda</a></li>
-                <li><a href="#projeler" className="hover:text-accent transition-colors">Projeler</a></li>
-                <li><a href="#blog" className="hover:text-accent transition-colors">Blog</a></li>
+                <li><a href="#about" className="hover:text-accent transition-colors">{t.footer.links.about}</a></li>
+                <li><a href="#projects" className="hover:text-accent transition-colors">{t.footer.links.projects}</a></li>
+                <li><a href="#blog" className="hover:text-accent transition-colors">{t.footer.links.blog}</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-primary mb-3">İletişim</h4>
-              <p className="text-sm text-foreground/60">Denizli, Türkiye</p>
-              <p className="text-sm text-foreground/60">info@bkare-mimarlik.com</p>
+              <h4 className="font-semibold text-primary mb-3">{t.footer.contact}</h4>
+              <p className="text-sm text-foreground/60">{t.contactSection.address}</p>
+              <a
+                href="mailto:info@bkare-mimarlik.com"
+                className="text-sm text-foreground/60 hover:text-accent transition-colors inline-block"
+              >
+                info@bkare-mimarlik.com
+              </a>
               <div className="flex gap-4 mt-4">
                 <a href="https://www.instagram.com/bkaremimarlik.tr/" target="_blank" rel="noopener noreferrer" className="text-foreground/60 hover:text-accent transition-colors">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.322a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/></svg>
@@ -608,7 +1138,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-border pt-8 text-center text-sm text-foreground/60">
-            <p>&copy; 2025 b² Mimarlık & İnşaat. Tüm hakları saklıdır.</p>
+            <p>&copy; 2025 {t.brand}. {t.footer.rights}</p>
           </div>
         </div>
       </footer>

@@ -1,4 +1,9 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type Theme = "light" | "dark";
 
@@ -22,9 +27,15 @@ export function ThemeProvider({
   switchable = false,
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (switchable) {
-      const stored = localStorage.getItem("theme");
-      return (stored as Theme) || defaultTheme;
+    if (!switchable || typeof window === "undefined") {
+      return defaultTheme;
+    }
+    const stored = localStorage.getItem("theme");
+    if (stored === "light" || stored === "dark") {
+      return stored;
+    }
+    if (window.matchMedia?.("(prefers-color-scheme: dark)").matches) {
+      return "dark";
     }
     return defaultTheme;
   });
@@ -41,6 +52,7 @@ export function ThemeProvider({
       localStorage.setItem("theme", theme);
     }
   }, [theme, switchable]);
+
 
   const toggleTheme = switchable
     ? () => {

@@ -1,4 +1,4 @@
-# b² Mimarlık & İnşaat - Web Tasarım Felsefesi
+# B² Mimarlık & İnşaat - Web Tasarım Felsefesi
 
 ## Seçilen Tasarım Yaklaşımı: "Minimalist Raffinement"
 
