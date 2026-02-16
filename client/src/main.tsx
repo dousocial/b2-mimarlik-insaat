@@ -8,6 +8,27 @@ import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
 
+const attachAnalytics = () => {
+  if (typeof document === "undefined") return;
+  const endpoint = import.meta.env.VITE_ANALYTICS_ENDPOINT as string | undefined;
+  const websiteId = import.meta.env.VITE_ANALYTICS_WEBSITE_ID as string | undefined;
+
+  if (!endpoint || !websiteId) return;
+
+  const normalized = endpoint.replace(/\/$/, "");
+  const scriptSrc = `${normalized}/umami`;
+  const existing = document.querySelector(`script[src="${scriptSrc}"]`);
+  if (existing) return;
+
+  const script = document.createElement("script");
+  script.defer = true;
+  script.src = scriptSrc;
+  script.dataset.websiteId = websiteId;
+  document.head.appendChild(script);
+};
+
+attachAnalytics();
+
 const queryClient = new QueryClient();
 
 const redirectToLoginIfUnauthorized = (error: unknown) => {
