@@ -1,0 +1,133 @@
+export function VisualizationIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 150 149.999998"
+      width="32"
+      height="32"
+      {...props}
+    >
+      <path
+        strokeLinecap="butt"
+        transform="matrix(-0.75, 0.000000001309, -0.000000001309, -0.75, 111.504933, 128.544955)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M 0.00136919 1.497439 L 103.886792 1.49744 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(0.000000001309, -0.75, 0.75, 0.000000001309, 86.204703, 127.41767)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M -0.000398641 1.497896 L 134.332943 1.497895 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(-0.59264, -0.45965, 0.45965, -0.59264, 101.893179, 39.388594)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M 0.000357013 1.499106 L 25.740207 1.500295 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(0, -0.75, 0.75, 0, 101.456818, 127.415035)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M 0.00129609 1.500285 L 119.964845 1.500285 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(0, -0.75, 0.75, 0, 79.868478, 127.416031)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M -0.00258424 1.498279 L 69.289086 1.498279 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(0, -0.75, 0.75, 0, 43.449611, 127.416031)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M -0.00258424 1.499477 L 69.289086 1.499477 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(0, -0.75, 0.75, 0, 65.089613, 127.169409)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M 0.00192031 1.500308 L 80.272758 1.500308 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(0.698256, -0.273748, 0.273748, 0.698256, 44.167784, 74.403103)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M 0.000268569 1.498288 L 30.986028 1.500894 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(0.650477, 0.373336, -0.373336, 0.650477, 66.776635, 65.992966)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M -0.00202128 1.501265 L 22.72222 1.502185 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(0.685562, -0.304145, 0.304145, 0.685562, 59.047308, 37.471406)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M 0.000328548 1.500511 L 40.040408 1.49803 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+      <path
+        strokeLinecap="butt"
+        transform="matrix(0, 0.75, -0.75, 0, 60.624766, 37.449258)"
+        fill="none"
+        strokeLinejoin="miter"
+        d="M -0.0000517673 1.499688 L 43.447867 1.499688 "
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeOpacity="1"
+        strokeMiterlimit="4"
+      />
+    </svg>
+  );
+}

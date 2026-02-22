@@ -1,8 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, Users, Building2, Palette, Hammer, Lightbulb, Mail, Phone, MapPin, Star, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowRight, CheckCircle2, Users, Mail, Phone, MapPin, Star, Moon, Sun, Menu } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
 import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
+import { ArchitectureIcon } from "@/components/icons/ArchitectureIcon";
+import { InteriorIcon } from "@/components/icons/InteriorIcon";
+import { ConstructionIcon } from "@/components/icons/ConstructionIcon";
+import { VisualizationIcon } from "@/components/icons/VisualizationIcon";
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 /**
  * B² Architecture & Construction - Sales Funnel Website
@@ -71,25 +77,25 @@ const CONTENT = {
     },
     services: [
       {
-        icon: Palette,
+        icon: ArchitectureIcon,
         title: "Architectural Design",
         description:
           "From concept to full project documentation, we translate your vision into buildable spaces.",
       },
       {
-        icon: Building2,
+        icon: InteriorIcon,
         title: "Interior Architecture",
         description:
           "Interior solutions that merge function and aesthetics for everyday use.",
       },
       {
-        icon: Hammer,
+        icon: ConstructionIcon,
         title: "Turnkey Construction",
         description:
           "From foundation to finish, we manage the whole process and deliver guaranteed results.",
       },
       {
-        icon: Lightbulb,
+        icon: VisualizationIcon,
         title: "3D Visualization",
         description: "See your project in high-detail 3D before it is built.",
       },
@@ -334,25 +340,25 @@ const CONTENT = {
     },
     services: [
       {
-        icon: Palette,
+        icon: ArchitectureIcon,
         title: "Mimari Tasarım",
         description:
           "Konsept tasarımından projelendirmeye kadar, vizyonunuzu mekânlara dönüştürüyoruz.",
       },
       {
-        icon: Building2,
+        icon: InteriorIcon,
         title: "İç Mimari Tasarım",
         description:
           "Fonksiyonellik ve estetik mükemmelliğin birleştiği iç mekan çözümleri.",
       },
       {
-        icon: Hammer,
+        icon: ConstructionIcon,
         title: "Anahtar Teslim İnşaat",
         description:
           "Temelden çatıya, tüm süreci tek elden yönetip garantili sonuçlar sunuyoruz.",
       },
       {
-        icon: Lightbulb,
+        icon: VisualizationIcon,
         title: "3D Görselleştirme",
         description:
           "Projenizi hayata geçirmeden önce detaylı 3D görseller ile görün.",
@@ -549,6 +555,8 @@ const CONTENT = {
 export default function Home() {
   // Auth is currently unused on the marketing page.
   const { theme, toggleTheme } = useTheme();
+  const heroWebglRef = useRef<HTMLDivElement | null>(null);
+  const heroSectionRef = useRef<HTMLElement | null>(null);
   const [lang, setLang] = useState<Lang>(() => {
     if (typeof window === "undefined") return "tr";
     const stored = localStorage.getItem("lang");
@@ -573,6 +581,8 @@ export default function Home() {
   const testimonials = t.testimonials;
   const projects = t.projects;
   const blogPosts = t.blogPosts;
+  const phoneDisplay = "90 555 838 67 22";
+  const phoneDial = phoneDisplay.replace(/\s+/g, "");
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -593,6 +603,184 @@ export default function Home() {
     setMeta('meta[name="twitter:title"]', t.meta.twitterTitle);
     setMeta('meta[name="twitter:description"]', t.meta.twitterDescription);
   }, [lang, t.meta]);
+
+  useEffect(() => {
+    const container = heroWebglRef.current;
+    const section = heroSectionRef.current;
+    if (!container || !section || typeof window === "undefined") return;
+
+    const coarsePointer = window.matchMedia("(hover: none), (pointer: coarse)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (coarsePointer.matches || reducedMotion.matches) return;
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    container.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 2);
+    camera.position.z = 1;
+
+    const geometry = new THREE.PlaneGeometry(2, 2, 220, 220);
+    const loader = new THREE.TextureLoader();
+
+    let colorReady = false;
+    let depthReady = false;
+
+    const colorSrc =
+      theme === "dark" ? "/images/evdark.png" : "/images/evlight.png";
+    const depthSrc =
+      theme === "dark" ? "/images/evdarkdepth.png" : "/images/evlightdepth.png";
+
+    const markReady = () => {
+      section.classList.add("hero-webgl--ready");
+    };
+
+    const colorTex = loader.load(colorSrc, () => {
+      colorReady = true;
+      if (depthReady) {
+        resize();
+        markReady();
+      }
+    });
+    const depthTex = loader.load(depthSrc, () => {
+      depthReady = true;
+      if (colorReady) {
+        resize();
+        markReady();
+      }
+    });
+    colorTex.colorSpace = THREE.SRGBColorSpace;
+    depthTex.colorSpace = THREE.NoColorSpace;
+    colorTex.wrapS = colorTex.wrapT = THREE.ClampToEdgeWrapping;
+    depthTex.wrapS = depthTex.wrapT = THREE.ClampToEdgeWrapping;
+    depthTex.minFilter = THREE.LinearFilter;
+    depthTex.magFilter = THREE.LinearFilter;
+    depthTex.generateMipmaps = false;
+
+    const uniforms = {
+      uImage: { value: colorTex },
+      uDepth: { value: depthTex },
+      uMouse: { value: new THREE.Vector2(0, 0) },
+      uIntensity: { value: 0.08 },
+      uDepthScale: { value: 0.18 },
+    };
+
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader: `
+        varying vec2 vUv;
+        uniform sampler2D uDepth;
+        uniform float uDepthScale;
+
+        void main() {
+          vUv = uv;
+          float depth = texture2D(uDepth, uv).r;
+          vec3 displaced = position + normal * (depth - 0.5) * uDepthScale;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(displaced, 1.0);
+        }
+      `,
+      fragmentShader: `
+        varying vec2 vUv;
+        uniform sampler2D uImage;
+        uniform sampler2D uDepth;
+        uniform vec2 uMouse;
+        uniform float uIntensity;
+
+        void main() {
+          float depth = texture2D(uDepth, vUv).r;
+          vec2 shift = uMouse * (depth - 0.5) * uIntensity;
+          vec2 uv = clamp(vUv + shift, 0.001, 0.999);
+          vec4 color = texture2D(uImage, uv);
+          gl_FragColor = color;
+        }
+      `,
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    const target = new THREE.Vector2(0, 0);
+    const current = new THREE.Vector2(0, 0);
+    let frame = 0;
+
+    const resize = () => {
+      const { clientWidth: width, clientHeight: height } = container;
+      renderer.setSize(width, height);
+
+      const image = colorTex.image as HTMLImageElement | undefined;
+      if (!image || !image.width || !image.height) return;
+
+      const imageAspect = image.width / image.height;
+      const containerAspect = width / height;
+      if (imageAspect > containerAspect) {
+        const scale = imageAspect / containerAspect;
+        colorTex.repeat.set(1 / scale, 1);
+        colorTex.offset.set((1 - 1 / scale) / 2, 0);
+        depthTex.repeat.set(1 / scale, 1);
+        depthTex.offset.set((1 - 1 / scale) / 2, 0);
+      } else {
+        const scale = containerAspect / imageAspect;
+        colorTex.repeat.set(1, 1 / scale);
+        colorTex.offset.set(0, (1 - 1 / scale) / 2);
+        depthTex.repeat.set(1, 1 / scale);
+        depthTex.offset.set(0, (1 - 1 / scale) / 2);
+      }
+      colorTex.needsUpdate = true;
+      depthTex.needsUpdate = true;
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      const bounds = section.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width;
+      const y = (event.clientY - bounds.top) / bounds.height;
+      target.set((x - 0.5) * 2, (0.5 - y) * 2);
+    };
+
+    const handlePointerLeave = () => {
+      target.set(0, 0);
+    };
+
+    const animate = () => {
+      current.lerp(target, 0.08);
+      uniforms.uMouse.value.copy(current);
+      renderer.render(scene, camera);
+      frame = requestAnimationFrame(animate);
+    };
+
+    const handleResize = () => {
+      resize();
+    };
+
+    resize();
+    animate();
+
+    section.addEventListener("pointermove", handlePointerMove);
+    section.addEventListener("pointerleave", handlePointerLeave);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      section.removeEventListener("pointermove", handlePointerMove);
+      section.removeEventListener("pointerleave", handlePointerLeave);
+      window.removeEventListener("resize", handleResize);
+      section.classList.remove("hero-webgl--ready");
+      geometry.dispose();
+      material.dispose();
+      colorTex.dispose();
+      depthTex.dispose();
+      renderer.dispose();
+      if (renderer.domElement.parentElement) {
+        renderer.domElement.parentElement.removeChild(renderer.domElement);
+      }
+    };
+  }, [theme]);
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -637,30 +825,138 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div id="top" className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-card border-b border-border animate-in">
+      <nav className="sticky top-0 z-50 border-b border-border/60 bg-card/70 backdrop-blur-xl supports-[backdrop-filter]:bg-card/60 animate-in">
         <div className="container flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-sm flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">{t.brandShort}</span>
-            </div>
+          <a href="#top" className="flex items-center gap-2">
+            <img
+              src="/images/b2logo.png"
+              alt={t.brand}
+              className="h-16 w-16 object-contain"
+            />
             <span className="font-bold text-lg text-primary">{t.brandNav}</span>
-          </div>
+          </a>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#about" className="text-sm hover:text-accent transition-colors">{t.nav.about}</a>
+            <a
+              href="/about"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm hover:text-accent transition-colors"
+            >
+              {t.nav.about}
+            </a>
             <a href="#projects" className="text-sm hover:text-accent transition-colors">{t.nav.projects}</a>
-            <a href="#services" className="text-sm hover:text-accent transition-colors">{t.nav.services}</a>
+            <a
+              href="/services"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm hover:text-accent transition-colors"
+            >
+              {t.nav.services}
+            </a>
             <a href="#blog" className="text-sm hover:text-accent transition-colors">{t.nav.blog}</a>
             <a href="#contact" className="text-sm hover:text-accent transition-colors">{t.nav.contact}</a>
           </div>
           <div className="flex items-center gap-3">
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card/80 text-primary shadow-sm transition-all hover:shadow-md hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                  aria-label="Open menu"
+                >
+                  <Menu className="h-5 w-5" />
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[85vw] max-w-sm">
+                  <SheetHeader className="border-b border-border/60">
+                    <SheetTitle className="flex items-center gap-3">
+                      <img
+                        src="/images/b2logo.png"
+                        alt={t.brand}
+                        className="h-8 w-8 object-contain"
+                      />
+                      <span className="text-primary">{t.brandNav}</span>
+                    </SheetTitle>
+                  </SheetHeader>
+                  <div className="flex flex-col gap-2 p-4 text-base">
+                    <SheetClose asChild>
+                      <a
+                        href="/about"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-lg px-3 py-2 hover:bg-accent/10 transition-colors"
+                      >
+                        {t.nav.about}
+                      </a>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <a href="#projects" className="rounded-lg px-3 py-2 hover:bg-accent/10 transition-colors">
+                        {t.nav.projects}
+                      </a>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <a
+                        href="/services"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-lg px-3 py-2 hover:bg-accent/10 transition-colors"
+                      >
+                        {t.nav.services}
+                      </a>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <a href="#blog" className="rounded-lg px-3 py-2 hover:bg-accent/10 transition-colors">
+                        {t.nav.blog}
+                      </a>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <a href="#contact" className="rounded-lg px-3 py-2 hover:bg-accent/10 transition-colors">
+                        {t.nav.contact}
+                      </a>
+                    </SheetClose>
+                  </div>
+                  <div className="mt-auto border-t border-border/60 p-4 flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => toggleTheme?.()}
+                      aria-label={t.nav.themeAria}
+                      aria-pressed={theme === "dark"}
+                      className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-primary shadow-sm transition-all hover:shadow-md hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                    >
+                      <span className="absolute inset-0 rounded-full bg-gradient-to-tr from-accent/25 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></span>
+                      {theme === "dark" ? (
+                        <Sun className="relative h-5 w-5" />
+                      ) : (
+                        <Moon className="relative h-5 w-5" />
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setLang(lang === "tr" ? "en" : "tr")}
+                      aria-label={t.nav.langAria}
+                      className="group relative inline-flex h-10 px-3 items-center justify-center rounded-full border border-border bg-card text-primary text-xs font-semibold uppercase tracking-wider shadow-sm transition-all hover:shadow-md hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                    >
+                      <span className="absolute inset-0 rounded-full bg-gradient-to-tr from-accent/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></span>
+                      <span className="relative">{lang === "tr" ? "EN" : "TR"}</span>
+                    </button>
+                    <SheetClose asChild>
+                      <Button
+                        className="ml-auto bg-accent hover:bg-accent/90 text-accent-foreground"
+                        onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}
+                      >
+                        {t.nav.cta}
+                      </Button>
+                    </SheetClose>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
             <button
               type="button"
               onClick={() => toggleTheme?.()}
               aria-label={t.nav.themeAria}
               aria-pressed={theme === "dark"}
-              className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-primary shadow-sm transition-all hover:shadow-md hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+              className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card/80 text-primary shadow-sm transition-all hover:shadow-md hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
             >
               <span className="absolute inset-0 rounded-full bg-gradient-to-tr from-accent/25 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></span>
               {theme === "dark" ? (
@@ -673,12 +969,15 @@ export default function Home() {
               type="button"
               onClick={() => setLang(lang === "tr" ? "en" : "tr")}
               aria-label={t.nav.langAria}
-              className="group relative inline-flex h-10 px-3 items-center justify-center rounded-full border border-border bg-card text-primary text-xs font-semibold uppercase tracking-wider shadow-sm transition-all hover:shadow-md hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+              className="group relative inline-flex h-10 px-3 items-center justify-center rounded-full border border-border bg-card/80 text-primary text-xs font-semibold uppercase tracking-wider shadow-sm transition-all hover:shadow-md hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
             >
               <span className="absolute inset-0 rounded-full bg-gradient-to-tr from-accent/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></span>
               <span className="relative">{lang === "tr" ? "EN" : "TR"}</span>
             </button>
-            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground" onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}>
+            <Button
+              className="hidden sm:inline-flex bg-accent hover:bg-accent/90 text-accent-foreground"
+              onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}
+            >
               {t.nav.cta}
             </Button>
           </div>
@@ -689,35 +988,32 @@ export default function Home() {
       <div className="fixed left-0 top-0 w-1 h-full bg-gradient-to-b from-accent via-accent to-accent/30 animate-pulse-glow"></div>
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8 animate-in fade-in slide-in-from-left-4 duration-700">
-              <div className="space-y-4">
-                <p className="text-accent font-semibold text-sm tracking-wide uppercase">{t.hero.eyebrow}</p>
-                <h1 className="text-5xl lg:text-6xl font-bold text-primary leading-tight">
-                  {t.hero.title}
-                </h1>
-                <p className="text-lg text-foreground/70 leading-relaxed max-w-lg">
-                  {t.hero.description}
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}>
-                  {t.hero.primaryCta} <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-                <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/5" onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}>
-                  {t.hero.secondaryCta}
-                </Button>
-              </div>
+      <section ref={heroSectionRef} className="relative pt-20 pb-32 min-h-[72vh] lg:min-h-[78vh] overflow-hidden hero-webgl">
+        <div ref={heroWebglRef} className="hero-webgl__canvas" aria-hidden="true"></div>
+        <div className="container relative z-10">
+          <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-left-4 duration-700">
+            <div className="hero-text-panel space-y-4">
+              <p className="text-accent font-semibold text-sm tracking-wide uppercase">{t.hero.eyebrow}</p>
+              <h1
+                className="hero-title text-5xl lg:text-6xl font-bold text-primary leading-tight"
+                data-text={t.hero.title}
+              >
+                {t.hero.title}
+              </h1>
+              <p
+                className="hero-description text-lg text-foreground/70 leading-relaxed"
+                data-text={t.hero.description}
+              >
+                {t.hero.description}
+              </p>
             </div>
-            <div className="relative h-96 lg:h-full animate-in fade-in slide-in-from-right-4 duration-700 delay-200">
-              <img
-                src="/images/hero.jpg"
-                alt="Modern Office Interior"
-                className="w-full h-full object-cover rounded-lg shadow-2xl animate-float-soft palette-image"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-lg pointer-events-none"></div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}>
+                {t.hero.primaryCta} <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+              <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/5" onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}>
+                {t.hero.secondaryCta}
+              </Button>
             </div>
           </div>
         </div>
@@ -754,6 +1050,16 @@ export default function Home() {
                   <p className="text-foreground">{t.about.bullets[2]}</p>
                 </div>
               </div>
+              <Button
+                asChild
+                variant="outline"
+                className="group mt-6 w-fit border-primary/30 text-primary hover:bg-primary/5"
+              >
+                <a href="/about" target="_blank" rel="noopener noreferrer">
+                  <span className="text-xs font-semibold uppercase tracking-[0.25em]">Daha Fazla</span>
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </Button>
             </div>
             <div className="order-1 lg:order-2 animate-in slide-in-from-right-4 duration-700">
               <img
@@ -985,10 +1291,10 @@ export default function Home() {
                   <div>
                     <p className="font-semibold">{t.contactSection.phoneLabel}</p>
                     <a
-                      href="tel:+905558386722"
+                      href={`tel:${phoneDial}`}
                       className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                     >
-                      +90 555 838 67 22
+                      {phoneDisplay}
                     </a>
                   </div>
                 </div>
@@ -1010,8 +1316,10 @@ export default function Home() {
             {/* Contact Form */}
             <form id="contact-form" onSubmit={handleFormSubmit} className="space-y-4 bg-primary-foreground/10 backdrop-blur p-8 rounded-lg animate-in">
               <div>
-                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.nameLabel}</label>
+                <label htmlFor="contact-name" className="block text-sm font-semibold mb-2">{t.contactSection.form.nameLabel}</label>
                 <input
+                  id="contact-name"
+                  name="name"
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -1022,8 +1330,10 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.emailLabel}</label>
+                <label htmlFor="contact-email" className="block text-sm font-semibold mb-2">{t.contactSection.form.emailLabel}</label>
                 <input
+                  id="contact-email"
+                  name="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -1033,8 +1343,10 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.phoneLabel}</label>
+                <label htmlFor="contact-phone" className="block text-sm font-semibold mb-2">{t.contactSection.form.phoneLabel}</label>
                 <input
+                  id="contact-phone"
+                  name="phone"
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -1043,8 +1355,10 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.projectTypeLabel}</label>
+                <label htmlFor="contact-project-type" className="block text-sm font-semibold mb-2">{t.contactSection.form.projectTypeLabel}</label>
                 <select
+                  id="contact-project-type"
+                  name="projectType"
                   value={formData.projectType}
                   onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                   className="w-full px-4 py-2 bg-primary-foreground/10 border border-primary-foreground/20 rounded-lg text-primary-foreground focus:outline-none focus:border-accent"
@@ -1058,8 +1372,10 @@ export default function Home() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-2">{t.contactSection.form.messageLabel}</label>
+                <label htmlFor="contact-message" className="block text-sm font-semibold mb-2">{t.contactSection.form.messageLabel}</label>
                 <textarea
+                  id="contact-message"
+                  name="message"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   required
@@ -1087,9 +1403,11 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-gradient-to-br from-primary to-accent rounded-sm flex items-center justify-center">
-                  <span className="text-primary-foreground font-bold text-xs">{t.brandShort}</span>
-                </div>
+                <img
+                  src="/images/b2logo.png"
+                  alt={t.brand}
+                  className="h-7 w-7 object-contain"
+                />
                 <span className="font-bold text-primary">{t.brand}</span>
               </div>
               <p className="text-sm text-foreground/60">{t.tagline}</p>
@@ -1097,7 +1415,16 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-primary mb-3">{t.footer.quickLinks}</h4>
               <ul className="space-y-2 text-sm text-foreground/60">
-                <li><a href="#about" className="hover:text-accent transition-colors">{t.footer.links.about}</a></li>
+                <li>
+                  <a
+                    href="/about"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-accent transition-colors"
+                  >
+                    {t.footer.links.about}
+                  </a>
+                </li>
                 <li><a href="#projects" className="hover:text-accent transition-colors">{t.footer.links.projects}</a></li>
                 <li><a href="#blog" className="hover:text-accent transition-colors">{t.footer.links.blog}</a></li>
               </ul>
