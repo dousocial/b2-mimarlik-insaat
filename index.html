@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>B² Mimarlık & İnşaat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="logo" href="index.html" aria-label="B² Mimarlık & İnşaat"><img src="assets/logo-clean.png" alt="B²"><span>MİMARLIK & İNŞAAT</span></a>
+        <nav class="nav-links" aria-label="Ana menü">
+          <a class="active" href="index.html">Ana Sayfa</a>
+          <a href="hakkimizda.html">Hakkımızda</a>
+          <a href="hizmetlerimiz.html">Hizmetlerimiz</a>
+          <a href="projeler.html">Projeler</a>
+          <a href="surec.html">Süreç</a>
+          <a href="blog.html">Blog</a>
+          <a href="iletisim.html">İletişim</a>
+        </nav>
+        <button class="btn btn-filled" data-modal="#quoteModal">Teklif Alın</button>
+        <button class="hamburger" aria-label="Menüyü aç"><i data-lucide="menu"></i></button>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="hero dark">
+        <div class="hero-media">
+          <img src="assets/home-hero.jpg" alt="Modern villa havuzlu dış cephe">
+        </div>
+        <div class="page-index" aria-label="Sayfa bölümleri">
+          <button class="active" data-target="#hero">01</button>
+          <div class="progress-rail"><div class="progress-fill"></div></div>
+          <button data-target="#trust">02</button>
+          <button data-target="#process">03</button>
+          <button data-target="#projects">04</button>
+        </div>
+        <div class="container hero-content">
+          <p class="eyebrow">İki Çizgi, Tek İmza</p>
+          <h1>Mimarlık ve mühendisliğin kesişimi.</h1>
+          <p class="lead">B<sup>2</sup> Mimarlık & İnşaat, tasarım ve uygulamayı tek çatı altında buluşturarak, bütüncül ve uygulanabilir çözümler üretir.</p>
+          <div class="hero-actions">
+            <a class="btn btn-filled" href="#projects" data-scroll="#projects">Projeleri İncele <i data-lucide="arrow-right"></i></a>
+            <button class="btn" data-modal="#quoteModal">Ücretsiz Ön Görüşme</button>
+          </div>
+        </div>
+        <button class="video-launch" data-modal="#videoModal">Tanıtım Videosunu İzleyin <span class="play-ring"><i data-lucide="play"></i></span></button>
+      </section>
+
+      <section id="trust" class="section">
+        <div class="container split">
+          <div class="image-box reveal">
+            <img src="assets/home-trust.jpg" alt="Mimari çizim ve proje masası">
+          </div>
+          <div>
+            <p class="eyebrow reveal">Hakkımızda</p>
+            <h2 class="reveal">İki disiplinin ortak aklından doğan bir tasarım ve yapım ofisi.</h2>
+            <p class="lead reveal" style="margin-top:22px">B<sup>2</sup> Mimarlık & İnşaat, mimari tasarım ile mühendislik ve saha deneyimini bir araya getirir. Her projede dengeli, uygulanabilir ve karakterli mekanlar üretmeyi hedefler.</p>
+            <div class="feature-grid three" style="margin-top:42px">
+              <article class="feature-card reveal">
+                <i data-lucide="building-2"></i>
+                <h3>Tek Noktadan Yönetim</h3>
+                <p>Tasarımdan anahtar teslim uygulamaya kadar tüm süreci tek elden yönetiyoruz.</p>
+                <p class="more">Tasarım, satın alma, saha ve teslim adımları tek merkezden planlanır.</p>
+              </article>
+              <article class="feature-card reveal">
+                <i data-lucide="drafting-compass"></i>
+                <h3>Bütüncül Yaklaşım</h3>
+                <p>Mimarlık ve mühendisliğin dengesini sağlayan bütüncül bir yaklaşım benimsiyoruz.</p>
+                <p class="more">Estetik kararlar, teknik doğruluk ve uygulanabilir detaylarla birlikte ele alınır.</p>
+              </article>
+              <article class="feature-card reveal">
+                <i data-lucide="badge-check"></i>
+                <h3>Profesyonel Ekip</h3>
+                <p>Müşterilerine güvenilir ve net sonuçlar sunan profesyonel ekip.</p>
+                <p class="more">Kurucu ortakların farklı uzmanlıkları tasarım ve uygulamada güçlü çözümler sağlar.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="process" class="section process-home" data-process-home>
+        <div class="container process-layout">
+          <div class="process-sticky">
+            <p class="eyebrow">Çalışma Süreci</p>
+            <h2>Adım adım<br>yol haritası.</h2>
+            <div class="step-list">
+              <button class="step-item active">
+                <span>01</span><span class="dot"></span><span><h3>İhtiyaç Analizi</h3><p>İşlev programı, kullanıcı profili, bütçe ve zaman hedeflerini birlikte netleştiriyoruz.</p></span>
+              </button>
+              <button class="step-item">
+                <span>02</span><span class="dot"></span><span><h3>Konsept Tasarım</h3><p>Yaratıcı fikirler ve uygulanabilir çözümler geliştiriyoruz.</p></span>
+              </button>
+              <button class="step-item">
+                <span>03</span><span class="dot"></span><span><h3>Projelendirme</h3><p>Detaylı teknik çizimler ve uygulama planları hazırlıyoruz.</p></span>
+              </button>
+              <button class="step-item">
+                <span>04</span><span class="dot"></span><span><h3>Uygulama & Teslim</h3><p>Şantiye yönetimi, kalite kontrolü ve teslim sonrası destek sağlıyoruz.</p></span>
+              </button>
+            </div>
+            <div class="step-panel open"></div>
+            <a class="btn btn-filled" href="surec.html" style="margin-top:24px">Süreci Detaylı İncele <i data-lucide="arrow-right"></i></a>
+          </div>
+          <div class="process-visual">
+            <div class="image-box reveal">
+              <img class="process-image" src="assets/process-analysis.jpg" alt="Mimari süreç görseli">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section" data-slider>
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Tamamlanan Projeler</p>
+              <h2>Portfolio</h2>
+            </div>
+            <div style="display:flex;align-items:center;gap:24px">
+              <a class="link-arrow" href="projeler.html">Tüm Projeleri Görüntüle <i data-lucide="arrow-right"></i></a>
+              <div class="slider-controls">
+                <button class="icon-btn" data-slide="prev" aria-label="Önceki proje"><i data-lucide="arrow-left"></i></button>
+                <button class="icon-btn" data-slide="next" aria-label="Sonraki proje"><i data-lucide="arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="project-row" data-slider-row>
+            <a class="project-card" href="projeler.html">
+              <div class="project-media"><img src="assets/project-villa.jpg" alt="Modern Ofis Fit-Out"><span class="tag">Ticari</span></div>
+              <div class="project-info"><h3>Modern Ofis Fit-Out</h3><p class="project-meta">İstanbul · 2500 m² · 2024</p><div class="link-row"><span>Projeyi İncele</span><span class="link-arrow"><i data-lucide="arrow-right"></i></span></div></div>
+            </a>
+            <a class="project-card" href="projeler.html?category=konut">
+              <div class="project-media"><img src="assets/home-hero.jpg" alt="Konut Kompleksi"><span class="tag">Konut</span></div>
+              <div class="project-info"><h3>Konut Kompleksi</h3><p class="project-meta">Denizli · 15000 m² · 2023</p><div class="link-row"><span>Projeyi İncele</span><span class="link-arrow"><i data-lucide="arrow-right"></i></span></div></div>
+            </a>
+            <a class="project-card" href="projeler.html">
+              <div class="project-media"><img src="assets/project-interior.jpg" alt="Modern ofis iç mimari"><span class="tag">İç Mekan</span></div>
+              <div class="project-info"><h3>Modern Ofis İç Mimari</h3><p class="project-meta">İstanbul · 2500 m² · 2024</p><div class="link-row"><span>Projeyi İncele</span><span class="link-arrow"><i data-lucide="arrow-right"></i></span></div></div>
+            </a>
+            <a class="project-card" href="projeler.html?category=ticari">
+              <div class="project-media"><img src="assets/project-office.jpg" alt="Kurumsal ofis uygulaması"><span class="tag">Uygulama</span></div>
+              <div class="project-info"><h3>Kurumsal Ofis Uygulaması</h3><p class="project-meta">İstanbul · 2500 m² · 2024</p><div class="link-row"><span>Projeyi İncele</span><span class="link-arrow"><i data-lucide="arrow-right"></i></span></div></div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-band">
+        <div class="container stats-grid">
+          <article class="stat-card"><div class="stat-value" data-count="2" data-suffix="+">0+</div><small>Kurucu Disiplin</small><p class="stat-note">Mimari tasarım ve mühendislik/saha deneyimi aynı çatı altında buluşur.</p></article>
+          <article class="stat-card"><div class="stat-value" data-count="4" data-suffix="+">0+</div><small>Yıllık Deneyim</small><p class="stat-note">İstanbul ve Denizli odağında kurumsal ve saha tecrübesi.</p></article>
+          <article class="stat-card"><div class="stat-value" data-count="2500" data-suffix="+">0+</div><small>m² Ofis Fit-Out</small><p class="stat-note">Tasarım, iç mimari ve uygulama kapsamlı tamamlanan iş örneği.</p></article>
+          <article class="stat-card"><div class="stat-value" data-count="100" data-suffix="%">0%</div><small>Müşteri Memnuniyeti</small><p class="stat-note">Şeffaf süreç ve teslim sonrası destekle kalıcı iş ortaklığı.</p></article>
+        </div>
+      </section>
+
+      <section class="cta-split">
+        <div class="cta-copy">
+          <p class="eyebrow">Bize Ulaşın</p>
+          <h2>Projeniz hakkında konuşalım.</h2>
+          <p>Projeniz hakkında konuşmak için bize yazın veya arayın. En kısa sürede sizinle iletişime geçeceğiz.</p>
+          <button class="btn btn-filled" data-modal="#quoteModal">Ücretsiz Ön Görüşme Alın <i data-lucide="arrow-right"></i></button>
+        </div>
+        <div class="cta-image"><img src="assets/home-cta.jpg" alt="Mimari proje toplantısı"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div><a class="logo" href="index.html" aria-label="B² Mimarlık & İnşaat"><img src="assets/logo-clean.png" alt="B²"><span>MİMARLIK & İNŞAAT</span></a><p style="margin-top:22px">Tasarım, iç mimarlık ve uygulamayı bir araya getirerek yaşam alanlarına değer katıyoruz.</p><div class="socials"><a href="https://www.instagram.com/bkaremimarlik.tr/" target="_blank" rel="noopener"><i data-lucide="camera"></i></a><a href="https://www.linkedin.com/company/bkare-mimarlik/" target="_blank" rel="noopener"><i data-lucide="briefcase-business"></i></a><a href="https://www.facebook.com/profile.php?id=61588390105053" target="_blank" rel="noopener"><i data-lucide="message-circle"></i></a></div></div>
+        <div><h3>Hizmetlerimiz</h3><ul><li><a href="hizmetlerimiz.html">Mimari Tasarım</a></li><li><a href="hizmetlerimiz.html">İç Mimari Tasarım</a></li><li><a href="hizmetlerimiz.html">Anahtar Teslim İnşaat</a></li><li><a href="hizmetlerimiz.html">3D Görselleştirme</a></li></ul></div>
+        <div><h3>Projeler</h3><ul><li><a href="projeler.html?category=konut">Konut Projeleri</a></li><li><a href="projeler.html?category=villa">Villa Projeleri</a></li><li><a href="projeler.html?category=ticari">Ticari Projeler</a></li><li><a href="projeler.html?category=ic-mekan">İç Mimari Projeler</a></li></ul></div>
+        <div><h3>Kurumsal</h3><ul><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="surec.html">Süreç</a></li><li><a href="blog.html">Blog</a></li><li><a href="#">Kariyer</a></li></ul></div>
+        <div><h3>İletişim</h3><ul><li><a href="https://maps.google.com/?q=Denizli+Turkiye" target="_blank">Denizli, Türkiye</a></li><li><a href="tel:+905558386722">90 555 838 67 22</a></li><li><a href="mailto:info@bkare-mimarlik.com">info@bkare-mimarlik.com</a></li></ul></div>
+      </div>
+      <div class="container footer-bottom"><span>© 2025 B<sup>2</sup> Mimarlık & İnşaat. Tüm hakları saklıdır.</span><span>Gizlilik Politikası &nbsp; | &nbsp; Kullanım Şartları</span></div>
+    </footer>
+  </div>
+
+  <div class="modal" id="quoteModal" aria-hidden="true"><div class="modal-backdrop"></div><div class="modal-box"><button class="close" aria-label="Kapat"><i data-lucide="x"></i></button><p class="eyebrow">Ücretsiz Ön Görüşme</p><h2>Projenizi konuşalım.</h2><form class="form-grid" data-enhanced-form><div class="field"><input required placeholder=" "><label>Ad Soyad</label></div><div class="field"><input type="tel" required placeholder=" "><label>Telefon</label></div><div class="field"><select required><option value="">Proje türü</option><option>Mimari Tasarım</option><option>İç Mimari Tasarım</option><option>Anahtar Teslim İnşaat</option><option>3D Görselleştirme</option></select></div><div class="field"><input required placeholder=" "><label>Lokasyon</label></div><div class="field"><select required><option value="">Tahmini bütçe</option><option>1-3M TL</option><option>3-7M TL</option><option>7M TL+</option></select></div><div class="field full"><textarea required placeholder=" "></textarea><label>Mesaj</label></div><button class="btn btn-filled form-submit" type="submit" data-done="Talebiniz Alındı">Gönder <i data-lucide="arrow-right"></i></button><p class="form-status field full"></p></form></div></div>
+  <div class="modal" id="videoModal" aria-hidden="true"><div class="modal-backdrop"></div><div class="modal-box"><button class="close" aria-label="Kapat"><i data-lucide="x"></i></button><p class="eyebrow">Tanıtım Videosu</p><h2>B<sup>2</sup> çalışma yaklaşımı.</h2><div class="video-frame"><span class="play-ring"><i data-lucide="play"></i></span></div><a class="btn btn-filled video-cta" href="projeler.html">Projelerimizi İnceleyin <i data-lucide="arrow-right"></i></a></div></div>
+  <div class="mobile-menu" id="mobileMenu"><div class="modal-backdrop close-menu"></div><div class="menu-box"><button class="close close-menu"><i data-lucide="x"></i></button><nav class="footer" style="padding:60px 0;background:transparent"><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="hizmetlerimiz.html">Hizmetlerimiz</a></li><li><a href="projeler.html">Projeler</a></li><li><a href="surec.html">Süreç</a></li><li><a href="blog.html">Blog</a></li><li><a href="iletisim.html">İletişim</a></li></ul></nav><button class="btn btn-filled" data-modal="#quoteModal">Teklif Al</button></div></div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="app.js"></script>
+</body>
+</html>

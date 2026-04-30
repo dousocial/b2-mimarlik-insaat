@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>İletişim | B²</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header"><div class="container nav-wrap"><a class="logo" href="index.html" aria-label="B² Mimarlık & İnşaat"><img src="assets/logo-clean.png" alt="B²"><span>MİMARLIK & İNŞAAT</span></a><nav class="nav-links"><a href="index.html">Ana Sayfa</a><a href="hakkimizda.html">Hakkımızda</a><a href="hizmetlerimiz.html">Hizmetlerimiz</a><a href="projeler.html">Projeler</a><a href="surec.html">Süreç</a><a href="blog.html">Blog</a><a class="active" href="iletisim.html">İletişim</a></nav><button class="btn" data-scroll="#contactForm">Teklif Alın</button><button class="hamburger"><i data-lucide="menu"></i></button></div></header>
+  <main>
+    <section class="hero short"><div class="hero-media" data-parallax><img src="assets/contact-hero.jpg" alt="B² ofis"></div><div class="container hero-content"><p class="eyebrow">İletişim</p><h1>Projenizi birlikte<br>hayata geçirelim.</h1><p class="lead">Fikirlerinizi dinlemek, ihtiyaçlarınıza en uygun çözümleri sunmak için buradayız. Bize ulaşın, projelerinizi birlikte planlayalım.</p><div class="feature-grid three" style="margin-top:42px;max-width:650px"><article class="feature-card"><i data-lucide="headphones"></i><h3>Hızlı Dönüş</h3><p>24 saat içinde size geri dönüş yapıyoruz.</p></article><article class="feature-card"><i data-lucide="shield"></i><h3>Gizlilik</h3><p>Tüm bilgileriniz gizli tutulur ve korunur.</p></article><article class="feature-card"><i data-lucide="users"></i><h3>Uzman Destek</h3><p>Alanında uzman ekibimizle yanınızdayız.</p></article></div></div></section>
+    <section class="section">
+      <div class="container contact-layout">
+        <aside><p class="eyebrow">İletişim Bilgileri</p><div class="contact-list" style="margin-top:36px"><a class="contact-item" href="https://maps.google.com/?q=Denizli+Turkiye" target="_blank"><i data-lucide="map-pin"></i><span><strong>Adres</strong><br>Denizli, Türkiye</span></a><a class="contact-item" href="tel:+905558386722"><i data-lucide="phone"></i><span><strong>Telefon</strong><br>90 555 838 67 22</span></a><a class="contact-item" href="mailto:info@bkare-mimarlik.com"><i data-lucide="mail"></i><span><strong>E-posta</strong><br>info@bkare-mimarlik.com</span></a><div class="contact-item"><i data-lucide="clock"></i><span><strong>Çalışma Saatleri</strong><br>Pzt-Cuma 09:00 - 18:00<br>Cumartesi 10:00 - 14:00</span></div><a class="contact-item" href="https://www.instagram.com/bkaremimarlik.tr/" target="_blank"><i data-lucide="camera"></i><span><strong>Instagram</strong><br>@bkaremimarlik.tr</span></a></div><button class="btn" style="margin-top:36px" data-scroll="#contactForm">Teklif Alın <i data-lucide="arrow-right"></i></button></aside>
+        <form id="contactForm" class="contact-form" data-enhanced-form>
+          <p class="eyebrow">Bize Mesaj Gönderin</p>
+          <div class="form-grid">
+            <div class="field"><input required placeholder=" "><label>Adınız Soyadınız</label></div>
+            <div class="field"><input type="email" required placeholder=" "><label>E-posta Adresiniz</label></div>
+            <div class="field full"><input type="tel" required placeholder=" "><label>Telefon Numaranız</label></div>
+            <div class="field full"><select required><option value="">Konu</option><option>Mimari Tasarım</option><option>İç Mimari Tasarım</option><option>Anahtar Teslim İnşaat</option><option>3D Görselleştirme</option><option>Teklif Talebi</option><option>Diğer</option></select></div>
+            <div class="field full"><textarea required placeholder=" "></textarea><label>Mesajınız</label></div>
+          </div>
+          <label class="check"><input type="checkbox" required><span>Kişisel verilerin işlenmesine ilişkin <a href="#" data-modal="#kvkkModal">aydınlatma metnini</a> okudum ve kabul ediyorum.</span></label>
+          <button class="btn btn-filled form-submit" type="submit">Mesaj Gönder <i data-lucide="arrow-right"></i></button>
+          <p class="form-status"></p>
+        </form>
+        <aside class="map-box"><div class="map"><button class="pin" aria-label="Ofis konumu"></button><div class="pin-card"><h3>B<sup>2</sup> Ofis</h3><p>Denizli, Türkiye</p></div></div><div class="map-copy"><p class="eyebrow">Ofisimizi Ziyaret Edin</p><p>Projelerinizi yüz yüze görüşmek ve detayları konuşmak için ofisimize bekleriz.</p><a class="btn" style="margin-top:22px" href="https://maps.google.com/?q=Denizli+Turkiye" target="_blank">Yol Tarifi Al <i data-lucide="arrow-right"></i></a></div></aside>
+      </div>
+    </section>
+    <section class="cta-band" data-parallax><img src="assets/contact-cta.jpg" alt="Blueprint"><div class="container"><div><p class="eyebrow">Birlikte Tasarlayalım</p><h2>Hayallerinizi gerçeğe dönüştürmek<br>için ilk adımı atalım.</h2><p>Ücretsiz ön görüşme talep edin, size en uygun çözümleri birlikte belirleyelim.</p></div><button class="btn" data-scroll="#contactForm">Ücretsiz Ön Görüşme Alın <i data-lucide="arrow-right"></i></button></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-grid"><div><a class="logo" href="index.html" aria-label="B² Mimarlık & İnşaat"><img src="assets/logo-clean.png" alt="B²"><span>MİMARLIK & İNŞAAT</span></a><p style="margin-top:22px">Mimarlık, iç mimarlık ve uygulama süreçlerini bütüncül bir yaklaşımla yönetiyoruz.</p><div class="socials"><a href="https://www.instagram.com/bkaremimarlik.tr/" target="_blank" rel="noopener"><i data-lucide="camera"></i></a><a href="https://www.linkedin.com/company/bkare-mimarlik/" target="_blank" rel="noopener"><i data-lucide="briefcase-business"></i></a><a href="https://www.facebook.com/profile.php?id=61588390105053" target="_blank" rel="noopener"><i data-lucide="message-circle"></i></a></div></div><div><h3>Hizmetlerimiz</h3><ul><li><a href="hizmetlerimiz.html">Mimari Tasarım</a></li><li><a href="hizmetlerimiz.html">İç Mimari Tasarım</a></li><li><a href="hizmetlerimiz.html">Anahtar Teslim İnşaat</a></li></ul></div><div><h3>Projeler</h3><ul><li><a href="projeler.html?category=konut">Konut</a></li><li><a href="projeler.html?category=villa">Villa</a></li><li><a href="projeler.html?category=ticari">Ticari</a></li></ul></div><div><h3>Kurumsal</h3><ul><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="surec.html">Süreç</a></li><li><a href="blog.html">Blog</a></li></ul></div><div><h3>İletişim</h3><ul><li><a href="tel:+905558386722">90 555 838 67 22</a></li><li><a href="mailto:info@bkare-mimarlik.com">info@bkare-mimarlik.com</a></li><li><a href="https://maps.google.com/?q=Denizli+Turkiye" target="_blank">Denizli, Türkiye</a></li></ul></div></div><div class="container footer-bottom"><span>© 2025 B<sup>2</sup> Mimarlık & İnşaat.</span><span>Gizlilik Politikası | Kullanım Şartları</span></div></footer>
+  <div class="modal" id="kvkkModal"><div class="modal-backdrop"></div><div class="modal-box"><button class="close"><i data-lucide="x"></i></button><p class="eyebrow">KVKK</p><h2>Aydınlatma Metni</h2><p class="lead" style="margin-top:20px">Bu demo metin, iletişim formu kapsamında paylaşılan kişisel verilerin yalnızca talebinize dönüş yapmak, teklif sürecini yürütmek ve yasal yükümlülükleri yerine getirmek amacıyla işleneceğini belirtir. Detaylı metin gerçek hukuk metniyle değiştirilmelidir.</p></div></div>
+  <div class="mobile-menu" id="mobileMenu"><div class="modal-backdrop close-menu"></div><div class="menu-box"><button class="close close-menu"><i data-lucide="x"></i></button><nav class="footer" style="padding:60px 0;background:transparent"><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="hizmetlerimiz.html">Hizmetlerimiz</a></li><li><a href="projeler.html">Projeler</a></li><li><a href="surec.html">Süreç</a></li><li><a href="blog.html">Blog</a></li><li><a href="iletisim.html">İletişim</a></li></ul></nav></div></div>
+  <div class="mobile-sticky"><a class="btn btn-filled" href="tel:+905558386722">Ara</a><a class="btn btn-filled" href="https://wa.me/905558386722">WhatsApp</a></div>
+  <script src="https://unpkg.com/lucide@latest"></script><script src="app.js"></script>
+</body>
+</html>
