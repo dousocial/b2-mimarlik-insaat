@@ -295,6 +295,10 @@ sup {
     linear-gradient(currentColor, currentColor) 0 100% / 100% 2px no-repeat;
 }
 
+.hamburger svg {
+  display: none;
+}
+
 .hero {
   position: relative;
   min-height: 720px;
@@ -1863,17 +1867,17 @@ sup {
   }
 
   .logo {
-    width: 104px;
-    align-items: flex-start;
+    width: 188px;
+    align-items: center;
   }
 
   .logo img {
-    width: 46px;
+    width: 78px;
   }
 
   .logo span {
-    font-size: 6.5px;
-    letter-spacing: .22em;
+    font-size: 8px;
+    letter-spacing: .32em;
     margin-top: 3px;
   }
 
