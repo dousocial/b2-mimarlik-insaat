@@ -1867,17 +1867,20 @@ sup {
   }
 
   .logo {
-    width: 188px;
+    width: 132px;
     align-items: center;
   }
 
   .logo img {
-    width: 78px;
+    width: 82px;
   }
 
   .logo span {
-    font-size: 8px;
-    letter-spacing: .32em;
+    width: 82px;
+    font-size: 6px;
+    letter-spacing: .18em;
+    text-align: justify;
+    text-align-last: justify;
     margin-top: 3px;
   }
 
