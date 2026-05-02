@@ -342,6 +342,7 @@ function initForms() {
 function initParallax() {
   const els = $$("[data-parallax]");
   if (!els.length) return;
+  if (innerWidth < 681) return;
   const update = () => {
     els.forEach((el) => {
       const rect = el.getBoundingClientRect();

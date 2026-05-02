@@ -738,6 +738,7 @@ sup {
 .blog-card,
 .service-card,
 .team-card {
+  min-width: 0;
   background: #fff;
   border: 1px solid var(--line);
   overflow: hidden;
@@ -1204,6 +1205,7 @@ sup {
 
 .project-grid,
 .blog-layout {
+  min-width: 0;
   display: grid;
   gap: 28px;
 }
@@ -1496,6 +1498,7 @@ sup {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 26px;
+  min-width: 0;
 }
 
 .blog-card h3 {
@@ -2056,8 +2059,31 @@ sup {
   .project-row {
     grid-auto-columns: minmax(260px, 86vw);
     gap: 14px;
-    margin-inline: -14px;
-    padding-inline: 14px;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .blog-layout > *,
+  .blog-grid,
+  .blog-card,
+  .blog-info,
+  .project-card,
+  .project-info,
+  .link-row {
+    min-width: 0;
+  }
+
+  .blog-grid,
+  .project-grid {
+    width: 100%;
+  }
+
+  .blog-card h3,
+  .blog-card p,
+  .project-card h3,
+  .project-card p,
+  .link-row {
+    overflow-wrap: anywhere;
   }
 
   .hero-content .feature-grid {
@@ -2221,6 +2247,10 @@ sup {
 
   .timeline-node .num {
     margin-bottom: 14px;
+  }
+
+  .timeline-node.active .num {
+    transform: none;
   }
 
   .advantages {
