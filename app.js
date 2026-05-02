@@ -339,6 +339,42 @@ function initForms() {
   });
 }
 
+function initZoraPortfolio() {
+  const wrap = $("[data-zora-carousel]");
+  if (!wrap) return;
+  const viewport = $(".zora-carousel-viewport", wrap);
+  const step = () => Math.min(520, Math.max(260, innerWidth * .72));
+  $("[data-zora-next]", wrap)?.addEventListener("click", () => {
+    viewport?.classList.add("is-manual");
+    viewport?.scrollBy({ left: step(), behavior: "smooth" });
+  });
+  $("[data-zora-prev]", wrap)?.addEventListener("click", () => {
+    viewport?.classList.add("is-manual");
+    viewport?.scrollBy({ left: -step(), behavior: "smooth" });
+  });
+
+  const lightbox = $("#zoraLightbox");
+  const image = $("img", lightbox);
+  const close = () => {
+    lightbox?.classList.remove("open");
+    document.body.classList.remove("modal-open");
+  };
+  $$("[data-lightbox]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!lightbox || !image) return;
+      image.src = button.dataset.lightbox;
+      lightbox.classList.add("open");
+      document.body.classList.add("modal-open");
+    });
+  });
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox || event.target.closest("[data-lightbox-close]")) close();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && lightbox?.classList.contains("open")) close();
+  });
+}
+
 function initParallax() {
   const els = $$("[data-parallax]");
   if (!els.length) return;
@@ -379,5 +415,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initTimeline();
   initBlog();
   initForms();
+  initZoraPortfolio();
   initParallax();
 });

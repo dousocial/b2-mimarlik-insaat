@@ -12,142 +12,133 @@
 </head>
 <body>
   <header class="site-header"><div class="container nav-wrap"><a class="logo" href="index.html" aria-label="B² Mimarlık & İnşaat"><img src="assets/logo-clean.png" alt="B²"><span>MİMARLIK & İNŞAAT</span></a><nav class="nav-links"><a href="index.html">Ana Sayfa</a><a href="hakkimizda.html">Hakkımızda</a><a href="hizmetlerimiz.html">Hizmetlerimiz</a><a class="active" href="projeler.html">Projeler</a><a href="surec.html">Süreç</a><a href="blog.html">Blog</a><a href="iletisim.html">İletişim</a></nav><button class="btn" data-modal="#quoteModal">Teklif Alın</button><button class="hamburger"><i data-lucide="menu"></i></button></div></header>
-  <main class="project-detail">
-    <section class="detail-hero">
-      <picture class="detail-hero-media">
+
+  <main class="project-detail zora-redesign">
+    <section class="zora-hero">
+      <picture class="zora-hero-bg">
         <source type="image/avif" srcset="assets/zora/zora-hero-900.avif 900w, assets/zora/zora-hero-1400.avif 1400w, assets/zora/zora-hero-2000.avif 2000w" sizes="100vw">
         <source type="image/webp" srcset="assets/zora/zora-hero-900.webp 900w, assets/zora/zora-hero-1400.webp 1400w, assets/zora/zora-hero-2000.webp 2000w" sizes="100vw">
-        <img src="assets/zora/zora-hero-1400.jpg" alt="Zora Ailesinin Evi modern ada mutfak">
+        <img src="assets/zora/zora-hero-1400.jpg" alt="Zora Ailesinin Evi ada mutfak">
       </picture>
-      <div class="container detail-hero-content">
+      <div class="container zora-hero-inner">
         <p class="breadcrumb"><a href="index.html">Ana Sayfa</a> / <a href="projeler.html">Projeler</a> / Zora Ailesinin Evi</p>
-        <p class="eyebrow">Konut / İç Mimari & Uygulama</p>
-        <h1>Zora Ailesinin Evi</h1>
-        <p class="lead">Mevcut bir yapının, yeni yaşam senaryolarına göre tamamen kişiselleştirilmiş bir aile evine dönüşümü.</p>
-        <button class="btn btn-filled" data-modal="#quoteModal">Benzer Proje Yaptırmak İstiyorum <i data-lucide="arrow-right"></i></button>
+        <div class="zora-title-block">
+          <p class="eyebrow">Konut / İç Mimari & Uygulama</p>
+          <h1>Zora Ailesinin Evi</h1>
+          <p>Mevcut bir yapının, yeni yaşam senaryolarına göre kişiselleştirilmiş modern bir aile evine dönüşümü.</p>
+          <div class="zora-hero-actions">
+            <button class="btn btn-filled" data-modal="#quoteModal">Benzer Proje Yaptırmak İstiyorum <i data-lucide="arrow-right"></i></button>
+            <a class="link-arrow" href="#gallery" data-scroll="#gallery">Görselleri İncele <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="zora-hero-facts">
+          <span><small>Lokasyon</small>Denizli</span>
+          <span><small>Yıl</small>2026</span>
+          <span><small>Proje Türü</small>Konut</span>
+          <span><small>Hizmet</small>İç Mimari & Uygulama</span>
+        </div>
       </div>
     </section>
 
-    <section class="project-facts">
-      <div class="container fact-grid">
-        <article><i data-lucide="map-pin"></i><span>Lokasyon</span><strong>Denizli</strong></article>
-        <article><i data-lucide="calendar-days"></i><span>Yıl</span><strong>2026</strong></article>
-        <article><i data-lucide="home"></i><span>Proje Türü</span><strong>Konut</strong></article>
-        <article><i data-lucide="briefcase-business"></i><span>Hizmet</span><strong>İç Mimari & Uygulama</strong></article>
-        <article><i data-lucide="clock-3"></i><span>Süre</span><strong>Proje kapsamına göre</strong></article>
+    <section id="gallery" class="zora-strip" data-zora-carousel>
+      <div class="container zora-strip-head">
+        <div>
+          <p class="eyebrow">Proje Galerisi</p>
+          <h2>Detaylar arasında gezinin.</h2>
+        </div>
+        <div class="slider-controls">
+          <button class="icon-btn" data-zora-prev aria-label="Önceki görsel"><i data-lucide="arrow-left"></i></button>
+          <button class="icon-btn" data-zora-next aria-label="Sonraki görsel"><i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+      <div class="zora-carousel-viewport">
+        <div class="zora-carousel-track">
+          <button data-lightbox="assets/zora/zora-kitchen-wide-1200.jpg"><img src="assets/zora/zora-kitchen-wide-820.webp" alt="Ada mutfak genel görünüm"></button>
+          <button data-lightbox="assets/zora/zora-kitchen-island-1200.jpg"><img src="assets/zora/zora-kitchen-island-820.webp" alt="Ada mutfak ve bar alanı"></button>
+          <button data-lightbox="assets/zora/zora-living-1200.jpg"><img src="assets/zora/zora-living-820.webp" alt="Salon yaşam alanı"></button>
+          <button data-lightbox="assets/zora/zora-dining-1200.jpg"><img src="assets/zora/zora-dining-820.webp" alt="Yemek alanı"></button>
+          <button data-lightbox="assets/zora/zora-entrance-console-1200.jpg"><img src="assets/zora/zora-entrance-console-820.webp" alt="Fugalı lambiri ve dresuar"></button>
+          <button data-lightbox="assets/zora/zora-stairs-1200.jpg"><img src="assets/zora/zora-stairs-820.webp" alt="Ahşap merdiven"></button>
+          <button data-lightbox="assets/zora/zora-dressing-island-1200.jpg"><img src="assets/zora/zora-dressing-island-820.webp" alt="Giyinme alanı ve mücevher adası"></button>
+          <button data-lightbox="assets/zora/zora-suite-1200.jpg"><img src="assets/zora/zora-suite-820.webp" alt="Ebeveyn süiti"></button>
+          <button data-lightbox="assets/zora/zora-roof-storage-1200.jpg"><img src="assets/zora/zora-roof-storage-820.webp" alt="Çatı eğimi depolama alanı"></button>
+          <button data-lightbox="assets/zora/zora-hall-1200.jpg"><img src="assets/zora/zora-hall-820.webp" alt="Kemerli koridor geçişi"></button>
+        </div>
       </div>
     </section>
 
-    <section class="section detail-story">
-      <div class="container story-grid">
-        <article class="story-copy">
+    <section class="section zora-narrative">
+      <div class="container zora-editorial">
+        <aside>
           <p class="eyebrow">Projenin Hikayesi</p>
           <h2>Bkare Mimarlık İnşaat imzasıyla kişisel bir yaşam alanı.</h2>
+        </aside>
+        <div class="zora-copy">
           <p>Bkare Mimarlık İnşaat olarak, yakın dostumuz Sinan Bey ve değerli eşi için hayata geçirdiğimiz Zora Ailesinin Evi, mevcut bir yapının hayal gücü ve profesyonel dokunuşlarla nasıl tamamen kişiselleştirilmiş bir yaşam alanına dönüştüğünün güçlü örneklerinden biridir.</p>
-          <p>Firmamız için özel bir yere sahip olan bu projede, evi devraldığımızda kullanılabilir durumda olan iç mekanı, yeni çiftimizin zevklerine ve ihtiyaçlarına göre sıfırdan kurguladık. İç mekandaki mevcut duvarları yıkarak salonu, mutfağı ve diğer yaşam alanlarını yeni kullanım senaryolarına göre yeniden inşa ettik.</p>
-        </article>
-        <picture class="story-image">
-          <source type="image/avif" srcset="assets/zora/zora-story-900.avif 900w, assets/zora/zora-story-1400.avif 1400w" sizes="(max-width: 900px) 100vw, 54vw">
-          <source type="image/webp" srcset="assets/zora/zora-story-900.webp 900w, assets/zora/zora-story-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 54vw">
-          <img src="assets/zora/zora-story-1400.jpg" alt="Zora Ailesinin Evi salon yaşam alanı" loading="lazy" decoding="async">
-        </picture>
+          <p>Firmamız için özel bir yere sahip olan bu projede, evi devraldığımızda kullanılabilir durumda olan iç mekanı, yeni çiftimizin zevklerine ve ihtiyaçlarına göre sıfırdan kurguladık. Mevcut duvarları yeniden ele alarak salonu, mutfağı ve yaşam alanlarını yeni kullanım senaryolarına göre inşa ettik.</p>
+        </div>
       </div>
     </section>
 
-    <section class="section detail-blocks">
-      <div class="container detail-block-grid">
+    <section class="zora-focus">
+      <div class="container zora-focus-grid">
         <article>
-          <p class="eyebrow">Mutfak</p>
-          <h2>Modern, geniş ve fonksiyonel bir ada mutfak.</h2>
-          <p>Mevcut mutfağı tamamen yenileyerek mekanın genişliğini en verimli şekilde kullandık. Depolama hacmini artırmak için merkezde şık ve güçlü bir ada mutfak kurguladık.</p>
-          <ul>
-            <li>Adanın ön yüzünde maksimum kapasiteli çekmeceli depolama alanları tasarlandı.</li>
-            <li>Arka yüz, günlük yemekler ve kahve keyfi için iki kişilik yüksek masa formatında çözüldü.</li>
-            <li>Tüm dolap ve kapak sistemlerinde frenli ve çift açılımlı mekanizmalar tercih edildi.</li>
-            <li>Misafir ağırlamaları için salon bölümünde bağımsız bir yemek masası alanı planlandı.</li>
-          </ul>
+          <span>01</span>
+          <h3>Modern, geniş ve fonksiyonel mutfak</h3>
+          <p>Merkezdeki ada mutfak hem güçlü depolama hem de iki kişilik bar kullanımı için kurgulandı. Frenli ve çift açılımlı mekanizmalarla uzun ömürlü kullanım hedeflendi.</p>
         </article>
         <article>
-          <p class="eyebrow">Antre</p>
-          <h2>Şık ve akılcı bir karşılama alanı.</h2>
-          <p>Koridor bölümünde yer alan mevcut elektrik panosu ve vestiyer alanını, ev sahiplerinin renk ve tasarım tercihleri doğrultusunda tamamen revize ettik.</p>
-          <ul>
-            <li>Merdivene bağlanan kısıtlı alanda büyük kapalı vestiyer yerine hafif bir dresuar tasarlandı.</li>
-            <li>Arka planda tüm evin mobilya diliyle uyumlu fugalı lambiri kullanıldı.</li>
-            <li>Anahtar, parfüm ve günlük eşyalar için pratik bir toplanma noktası oluşturuldu.</li>
-            <li>Yanına kompakt ve işlevsel bir ayakkabılık/vestiyer dolabı entegre edildi.</li>
-          </ul>
+          <span>02</span>
+          <h3>Şık ve akılcı antre</h3>
+          <p>Kısıtlı giriş alanında büyük vestiyer yerine fugalı lambiri, dresuar ve kompakt ayakkabılık ile daha hafif, işlevsel bir karşılama alanı oluşturuldu.</p>
         </article>
         <article>
-          <p class="eyebrow">Ebeveyn Süiti</p>
-          <h2>Çatı dubleksinde lüks ve konfor.</h2>
-          <p>Üst katta, Sinan Bey'in talebi doğrultusunda mevcut üç ayrı odayı birleştirerek ferah bir ebeveyn süiti yarattık.</p>
-          <ul>
-            <li>Çatı eğiminden kaynaklanan üçgensel alanlar özel ölçü kısa dolaplarla değerlendirildi.</li>
-            <li>Füme cam kapaklı giyinme dolapları, hareket sensörlü gizli LED aydınlatmayla desteklendi.</li>
-            <li>Giyinme bölümünün merkezine cam üst yüzeyli özel mücevher adası konumlandırıldı.</li>
-            <li>Üst kattaki atıl mutfak alanı yeniden dizayn edilip boyanarak modern bir görünüme kavuştu.</li>
-          </ul>
+          <span>03</span>
+          <h3>Çatı dubleksinde ebeveyn süiti</h3>
+          <p>Üç oda birleştirilerek ferah bir süit yaratıldı. Çatı eğimindeki atıl alanlar özel ölçü dolaplarla değerlendirildi.</p>
         </article>
         <article>
-          <p class="eyebrow">Altyapı</p>
-          <h2>Yenilenen banyolar ve teknik iyileştirmeler.</h2>
-          <p>Estetik yeniliklerin yanında yapının teknik ömrünü uzatacak altyapı iyileştirmelerini de titizlikle gerçekleştirdik.</p>
-          <ul>
-            <li>Su alma riski taşıyan çatı bölgesinde yalıtım ve izolasyon çalışmaları tamamlandı.</li>
-            <li>Zemin seramikleri tamamen yenilendi.</li>
-            <li>Alt ve üst kattaki banyolar baştan aşağı ele alındı.</li>
-            <li>Çatı eğimi nedeniyle standart dışı kalan alanlara özel üretim duşakabin sistemleri uygulandı.</li>
-          </ul>
+          <span>04</span>
+          <h3>Altyapı ve yenilenen banyolar</h3>
+          <p>Çatı izolasyonu, zemin yenilemeleri ve çatı eğimine özel duşakabin çözümleriyle estetik kararlar teknik iyileştirmelerle tamamlandı.</p>
         </article>
       </div>
     </section>
 
-    <section class="section gallery-section">
+    <section class="section zora-split-story">
       <div class="container">
-        <div class="section-head">
-          <div><p class="eyebrow">Proje Galerisi</p><h2>Zora Ailesinin Evi detayları.</h2></div>
-          <a class="link-arrow" href="projeler.html?category=konut">Konut Projelerine Dön <i data-lucide="arrow-right"></i></a>
-        </div>
-        <div class="zora-gallery">
-          <a href="assets/zora/zora-kitchen-wide-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-kitchen-wide-520.avif 520w, assets/zora/zora-kitchen-wide-820.avif 820w, assets/zora/zora-kitchen-wide-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-kitchen-wide-520.webp 520w, assets/zora/zora-kitchen-wide-820.webp 820w, assets/zora/zora-kitchen-wide-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-kitchen-wide-820.jpg" alt="Ada mutfak genel görünüm" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-kitchen-island-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-kitchen-island-520.avif 520w, assets/zora/zora-kitchen-island-820.avif 820w, assets/zora/zora-kitchen-island-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-kitchen-island-520.webp 520w, assets/zora/zora-kitchen-island-820.webp 820w, assets/zora/zora-kitchen-island-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-kitchen-island-820.jpg" alt="Ada mutfak ve bar alanı" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-kitchen-corner-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-kitchen-corner-520.avif 520w, assets/zora/zora-kitchen-corner-820.avif 820w, assets/zora/zora-kitchen-corner-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-kitchen-corner-520.webp 520w, assets/zora/zora-kitchen-corner-820.webp 820w, assets/zora/zora-kitchen-corner-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-kitchen-corner-820.jpg" alt="Mutfak çalışma alanı" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-living-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-living-520.avif 520w, assets/zora/zora-living-820.avif 820w, assets/zora/zora-living-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-living-520.webp 520w, assets/zora/zora-living-820.webp 820w, assets/zora/zora-living-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-living-820.jpg" alt="Salon yaşam alanı" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-dining-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-dining-520.avif 520w, assets/zora/zora-dining-820.avif 820w, assets/zora/zora-dining-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-dining-520.webp 520w, assets/zora/zora-dining-820.webp 820w, assets/zora/zora-dining-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-dining-820.jpg" alt="Yemek alanı" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-entrance-console-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-entrance-console-520.avif 520w, assets/zora/zora-entrance-console-820.avif 820w, assets/zora/zora-entrance-console-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-entrance-console-520.webp 520w, assets/zora/zora-entrance-console-820.webp 820w, assets/zora/zora-entrance-console-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-entrance-console-820.jpg" alt="Fugalı lambiri ve dresuar" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-stairs-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-stairs-520.avif 520w, assets/zora/zora-stairs-820.avif 820w, assets/zora/zora-stairs-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-stairs-520.webp 520w, assets/zora/zora-stairs-820.webp 820w, assets/zora/zora-stairs-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-stairs-820.jpg" alt="Ahşap merdiven" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-dressing-island-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-dressing-island-520.avif 520w, assets/zora/zora-dressing-island-820.avif 820w, assets/zora/zora-dressing-island-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-dressing-island-520.webp 520w, assets/zora/zora-dressing-island-820.webp 820w, assets/zora/zora-dressing-island-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-dressing-island-820.jpg" alt="Giyinme alanı ve mücevher adası" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-suite-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-suite-520.avif 520w, assets/zora/zora-suite-820.avif 820w, assets/zora/zora-suite-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-suite-520.webp 520w, assets/zora/zora-suite-820.webp 820w, assets/zora/zora-suite-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-suite-820.jpg" alt="Ebeveyn süiti" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-roof-storage-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-roof-storage-520.avif 520w, assets/zora/zora-roof-storage-820.avif 820w, assets/zora/zora-roof-storage-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-roof-storage-520.webp 520w, assets/zora/zora-roof-storage-820.webp 820w, assets/zora/zora-roof-storage-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-roof-storage-820.jpg" alt="Çatı eğimi depolama alanı" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-dressing-detail-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-dressing-detail-520.avif 520w, assets/zora/zora-dressing-detail-820.avif 820w, assets/zora/zora-dressing-detail-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-dressing-detail-520.webp 520w, assets/zora/zora-dressing-detail-820.webp 820w, assets/zora/zora-dressing-detail-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-dressing-detail-820.jpg" alt="Giyinme odası detayları" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-hall-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-hall-520.avif 520w, assets/zora/zora-hall-820.avif 820w, assets/zora/zora-hall-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-hall-520.webp 520w, assets/zora/zora-hall-820.webp 820w, assets/zora/zora-hall-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-hall-820.jpg" alt="Kemerli koridor geçişi" loading="lazy" decoding="async"></picture></a>
-          <a href="assets/zora/zora-kitchen-detail-1200.jpg"><picture><source type="image/avif" srcset="assets/zora/zora-kitchen-detail-520.avif 520w, assets/zora/zora-kitchen-detail-820.avif 820w, assets/zora/zora-kitchen-detail-1200.avif 1200w" sizes="(max-width: 680px) 100vw, 33vw"><source type="image/webp" srcset="assets/zora/zora-kitchen-detail-520.webp 520w, assets/zora/zora-kitchen-detail-820.webp 820w, assets/zora/zora-kitchen-detail-1200.webp 1200w" sizes="(max-width: 680px) 100vw, 33vw"><img src="assets/zora/zora-kitchen-detail-820.jpg" alt="Mutfak tezgah ve dolap detayı" loading="lazy" decoding="async"></picture></a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section result-section">
-      <div class="container result-grid">
+        <picture>
+          <source type="image/avif" srcset="assets/zora/zora-story-900.avif 900w, assets/zora/zora-story-1400.avif 1400w" sizes="(max-width: 900px) 100vw, 58vw">
+          <source type="image/webp" srcset="assets/zora/zora-story-900.webp 900w, assets/zora/zora-story-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 58vw">
+          <img src="assets/zora/zora-story-1400.jpg" alt="Zora Ailesinin Evi salon" loading="lazy" decoding="async">
+        </picture>
         <article>
           <p class="eyebrow">Ortaya Çıkan Sonuç</p>
           <h2>Yeni hayat için karakterli, fonksiyonel ve kişisel bir ev.</h2>
           <p>Bkare Mimarlık İnşaat olarak, Zora Ailesi'ne yeni hayatlarında mutluluklar diler; hayallerindeki yaşam alanını gerçeğe dönüştürme yolculuğunda bize güvendikleri için teşekkür ederiz.</p>
+          <button class="btn btn-filled" data-modal="#quoteModal">Projenizi Planlayalım <i data-lucide="arrow-right"></i></button>
         </article>
-        <div class="result-cards">
-          <article><i data-lucide="utensils"></i><h3>Fonksiyonel Mutfak</h3><p>Ada, bar ve güçlü depolama.</p></article>
-          <article><i data-lucide="shirt"></i><h3>Giyinme Alanı</h3><p>Füme cam ve sensörlü LED.</p></article>
-          <article><i data-lucide="archive"></i><h3>Akıllı Depolama</h3><p>Çatı eğimindeki atıl alanlar değerlendirildi.</p></article>
-          <article><i data-lucide="droplets"></i><h3>Teknik Koruma</h3><p>Çatı izolasyonu ve yenilenen banyolar.</p></article>
-        </div>
       </div>
     </section>
 
-    <section class="cta-band"><img src="assets/zora/zora-story-1400.webp" alt="Zora Ailesinin Evi salon" loading="lazy" decoding="async"><div class="container"><div><p class="eyebrow">Sizin Projeniz</p><h2>Hayalinizdeki evi birlikte tasarlayalım.</h2><p>Ekibimizle iletişime geçin, mevcut alanınızı ihtiyaçlarınıza göre yeniden kurgulayalım.</p></div><button class="btn" data-modal="#quoteModal">Ücretsiz Ön Görüşme Alın <i data-lucide="arrow-right"></i></button></div></section>
+    <section class="section zora-related">
+      <div class="container">
+        <div class="section-head">
+          <div><p class="eyebrow">Diğer Projeler</p><h2>Benzer hikayeler.</h2></div>
+          <a class="link-arrow" href="projeler.html">Tüm Projeler <i data-lucide="arrow-right"></i></a>
+        </div>
+        <div class="related-grid">
+          <a class="project-card" href="zora-ailesi-evi.html"><div class="project-media"><img src="assets/zora/zora-cover-820.webp" alt="Zora Ailesinin Evi"><span class="tag">Konut</span></div><div class="project-info"><h3>Konut İç Mekan Dönüşümü</h3><p class="project-meta">Denizli · İç Mimari</p><div class="link-row"><span>Projeyi İncele</span><span class="link-arrow"><i data-lucide="arrow-right"></i></span></div></div></a>
+          <a class="project-card" href="zora-ailesi-evi.html"><div class="project-media"><img src="assets/zora/zora-living-820.webp" alt="Salon projesi"><span class="tag">Yaşam Alanı</span></div><div class="project-info"><h3>Modern Aile Evi</h3><p class="project-meta">Konut · Uygulama</p><div class="link-row"><span>Projeyi İncele</span><span class="link-arrow"><i data-lucide="arrow-right"></i></span></div></div></a>
+          <a class="project-card" href="zora-ailesi-evi.html"><div class="project-media"><img src="assets/zora/zora-kitchen-island-820.webp" alt="Ada mutfak projesi"><span class="tag">Mutfak</span></div><div class="project-info"><h3>Ada Mutfak Kurgusu</h3><p class="project-meta">Konut · Tasarım</p><div class="link-row"><span>Projeyi İncele</span><span class="link-arrow"><i data-lucide="arrow-right"></i></span></div></div></a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer"><div class="container footer-grid"><div><a class="logo" href="index.html" aria-label="B² Mimarlık & İnşaat"><img src="assets/logo-clean.png" alt="B²"><span>MİMARLIK & İNŞAAT</span></a><p style="margin-top:22px">Seçkin projelerde tasarım ve uygulamayı aynı disiplinle yönetiyoruz.</p><div class="socials"><a href="https://www.linkedin.com/company/bkare-mimarlik/" target="_blank" rel="noopener"><i data-lucide="briefcase-business"></i></a><a href="https://www.instagram.com/bkaremimarlik.tr/" target="_blank" rel="noopener"><i data-lucide="camera"></i></a><a href="https://www.facebook.com/profile.php?id=61588390105053" target="_blank" rel="noopener"><i data-lucide="message-circle"></i></a></div></div><div><h3>Hizmetlerimiz</h3><ul><li><a href="hizmetlerimiz.html">Mimari Tasarım</a></li><li><a href="hizmetlerimiz.html">İç Mimari Tasarım</a></li><li><a href="hizmetlerimiz.html">Anahtar Teslim İnşaat</a></li></ul></div><div><h3>Projeler</h3><ul><li><a href="projeler.html?category=konut">Konut</a></li><li><a href="projeler.html?category=villa">Villa</a></li><li><a href="projeler.html?category=ticari">Ticari</a></li></ul></div><div><h3>Kurumsal</h3><ul><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="surec.html">Süreç</a></li><li><a href="blog.html">Blog</a></li></ul></div><div><h3>İletişim</h3><ul><li><a href="tel:+905558386722">90 555 838 67 22</a></li><li><a href="mailto:info@bkare-mimarlik.com">info@bkare-mimarlik.com</a></li><li><a href="https://maps.google.com/?q=Denizli+Turkiye" target="_blank">Denizli, Türkiye</a></li></ul></div></div><div class="container footer-bottom"><span>© 2025 B<sup>2</sup> Mimarlık & İnşaat.</span><span>Gizlilik Politikası | Kullanım Şartları</span></div></footer>
   <div class="modal" id="quoteModal" aria-hidden="true"><div class="modal-backdrop"></div><div class="modal-box"><button class="close" aria-label="Kapat"><i data-lucide="x"></i></button><p class="eyebrow">Ücretsiz Ön Görüşme</p><h2>Projenizi konuşalım.</h2><form class="form-grid" data-enhanced-form><div class="field"><input required placeholder=" "><label>Ad Soyad</label></div><div class="field"><input type="tel" required placeholder=" "><label>Telefon</label></div><div class="field"><select required><option value="">Proje türü</option><option>Mimari Tasarım</option><option>İç Mimari Tasarım</option><option>Anahtar Teslim İnşaat</option><option>3D Görselleştirme</option></select></div><div class="field"><input required placeholder=" "><label>Lokasyon</label></div><div class="field"><select required><option value="">Tahmini bütçe</option><option>1-3M TL</option><option>3-7M TL</option><option>7M TL+</option></select></div><div class="field full"><textarea required placeholder=" "></textarea><label>Mesaj</label></div><button class="btn btn-filled form-submit" type="submit" data-done="Talebiniz Alındı">Gönder <i data-lucide="arrow-right"></i></button><p class="form-status field full"></p></form></div></div>
+  <div class="zora-lightbox" id="zoraLightbox" aria-hidden="true"><button class="close" data-lightbox-close aria-label="Kapat"><i data-lucide="x"></i></button><img src="" alt="Büyütülmüş proje görseli"></div>
   <div class="mobile-menu" id="mobileMenu"><div class="modal-backdrop close-menu"></div><div class="menu-box"><button class="close close-menu"><i data-lucide="x"></i></button><nav class="footer" style="padding:60px 0;background:transparent"><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="hizmetlerimiz.html">Hizmetlerimiz</a></li><li><a href="projeler.html">Projeler</a></li><li><a href="surec.html">Süreç</a></li><li><a href="blog.html">Blog</a></li><li><a href="iletisim.html">İletişim</a></li></ul></nav></div></div>
   <script src="https://unpkg.com/lucide@latest"></script><script src="app.js"></script>
 </body>
