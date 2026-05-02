@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "rm -rf public && mkdir -p public && cp -R index.html hakkimizda.html hizmetlerimiz.html projeler.html surec.html blog.html iletisim.html styles.css app.js assets public/",
+    "build": "rm -rf public && mkdir -p public && cp -R index.html hakkimizda.html hizmetlerimiz.html projeler.html zora-ailesi-evi.html surec.html blog.html iletisim.html styles.css app.js assets public/",
     "start": "vite --host 0.0.0.0"
   },
   "dependencies": {
