@@ -2573,6 +2573,11 @@ sup {
     flex-direction: column;
   }
 
+  .zora-strip-head h2 {
+    max-width: 10.5em;
+    font-size: clamp(30px, 8.5vw, 40px);
+  }
+
   .zora-carousel-track {
     padding-inline: 14px;
     animation-duration: 58s;
